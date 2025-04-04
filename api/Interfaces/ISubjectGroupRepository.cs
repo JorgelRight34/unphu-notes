@@ -1,9 +1,10 @@
 using System;
 using api.Data;
+using api.Models;
 
 namespace api.Interfaces;
 
 public interface ISubjectGroupRepository
 {
-    Task AssignStudentToSubjectGroups(AppUser student);
+    Task<AppUser> AssignStudentToSubjectGroups(AppUser student);
 }

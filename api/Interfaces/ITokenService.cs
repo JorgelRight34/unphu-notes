@@ -1,5 +1,6 @@
 using System;
 using api.Data;
+using api.Models;
 
 namespace api.Interfaces;
 

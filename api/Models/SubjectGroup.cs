@@ -14,7 +14,7 @@ public class SubjectGroup
     [Required]
     public string? Name { get; set; }
     public int Credits { get; set; }
-    public int TeacherId { get; set; }
+    public string? TeacherId { get; set; }
 
     // Navigation properties
     [ForeignKey("TeacherId")]
