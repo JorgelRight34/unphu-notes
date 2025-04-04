@@ -4,7 +4,7 @@ using api.Data;
 using api.DTOs.UNPHUClient;
 using api.Models;
 
-namespace api.Clients;
+namespace api.Interfaces;
 
 public interface IUNPHUClient
 {
