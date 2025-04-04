@@ -8,6 +8,7 @@ namespace api.Interfaces;
 
 public interface IAuthRepository
 {
+    Task<AppUser?> GetByUsernameAsync(string username);
     Task<AppUser?> SignInFromGoogleTokenAsync(GoogleJsonWebSignature.Payload payload);
     Task<AppUser?> CreateFullStudent(AppUser student);
 }
