@@ -1,3 +1,5 @@
 api/appsettings.json
 api/appsettings.Development.json
 frontend/node_modules
+api/obj/Debug
+api/bin
