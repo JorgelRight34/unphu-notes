@@ -8,7 +8,7 @@ namespace api.Controllers
 {
     public class AuthController(IAuthRepository authRepository) : ApiBaseController
     {
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<ActionResult> Register([FromBody] GoogleLoginRequestDto request)
         {
             var payload = await GoogleJsonWebSignature.ValidateAsync(request.Token);
@@ -16,7 +16,7 @@ namespace api.Controllers
 
             var user = await authRepository.SignInFromGoogleTokenAsync(payload);
             if (user == null) return BadRequest();
-            
+
             return Ok(user);
         }
     }
