@@ -12,11 +12,13 @@ public static class IdentityServiceExtensions
 {
     public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
     {
-        services.AddAuthentication(options => {
+        services.AddAuthentication(options =>
+        {
             options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => {
+        }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+        {
             var key = config["TokenKey"] ?? throw new Exception("Secret key is missing.");
             options.TokenValidationParameters = new TokenValidationParameters
             {
@@ -24,13 +26,17 @@ public static class IdentityServiceExtensions
                 ValidIssuer = config["Issuer"],
                 ValidateIssuer = true,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey  = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
                 RoleClaimType = ClaimTypes.Role
             };
         });
 
-        services.AddIdentity<AppUser, IdentityRole>(options => {
-        });
+        services.AddIdentity<AppUser, IdentityRole>(options =>
+        {
+            options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-";
+        }).AddEntityFrameworkStores<ApplicationDbContext>();
+
+        services.AddAuthorization();
 
         return services;
     }
