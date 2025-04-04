@@ -2,6 +2,7 @@ using System;
 using System.Security.Claims;
 using System.Text;
 using api.Data;
+using api.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
