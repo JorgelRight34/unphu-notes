@@ -5,8 +5,8 @@ namespace api.Extensions;
 
 public static class ClaimsExtensions
 {
-    public static string? GetUsername(this ClaimsPrincipal claims)
+    public static string GetUsername(this ClaimsPrincipal claims)
     {
-        return claims.FindFirstValue(ClaimTypes.GivenName);
+        return claims.FindFirstValue(ClaimTypes.GivenName) ?? throw new ArgumentNullException("Username claim not found.");
     }
 }

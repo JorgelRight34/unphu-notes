@@ -15,6 +15,7 @@ public class Note
     [Required]
     [Url]
     public string? Url { get; set; }
+    public string? PublicId { get; set; }
     [Required]
     public DateTime DateTime { get; set; } = DateTime.Now;
 

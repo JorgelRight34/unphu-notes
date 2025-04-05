@@ -11,9 +11,9 @@ using Microsoft.EntityFrameworkCore;
 namespace api.Repositories;
 
 public class SubjectGroupRepository(
-    ApplicationDbContext context, 
-    IUNPHUClient unphuClient, 
-    IMapper mapper, 
+    ApplicationDbContext context,
+    IUNPHUClient unphuClient,
+    IMapper mapper,
     UserManager<AppUser> userManager
 ) : ISubjectGroupRepository
 {
@@ -68,6 +68,34 @@ public class SubjectGroupRepository(
         }
         return student;
     }
+    public async Task<SubjectGroup?> DeleteByIdAsync(int id)
+    {
+        var subjectGroup = await context.SubjectGroups.FindAsync(id);
+        if (subjectGroup == null) return null;
+
+        context.SubjectGroups.Remove(subjectGroup);
+        await context.SaveChangesAsync();
+
+        return subjectGroup;
+    }
+
+    public async Task<SubjectGroup?> GetByIdAsync(int id)
+    {
+        var subjectGroup = await context.SubjectGroups.FindAsync(id);
+        return subjectGroup;
+    }
+
+    public async Task<SubjectGroupMember?> GetGroupMember(string username, int subjectGroupId)
+    {
+        var user = await userManager.FindByNameAsync(username);
+        if (user == null) throw new Exception("User not found");
+
+        var groupMember = await context.SubjectGroupMembers
+            .Where(x => x.StudentId == user.Id && x.SubjectGroupId == subjectGroupId)
+            .FirstOrDefaultAsync();
+
+        return groupMember;
+    }
 
     /// <summary>Gets a student's enrolled subject groups.</summary>
     /// <param name="username">Student ID to lookup</param>
@@ -80,11 +108,11 @@ public class SubjectGroupRepository(
         if (user == null) return null;  // Avoid no users
 
         // Get all subject the user is currently taking
-        var subjectMembers = await context.SubjectGroupMembers  
+        var subjectMembers = await context.SubjectGroupMembers
             .Include(x => x.SubjectGroup)
             .Where(x => x.StudentId == user.Id)
             .ToListAsync();
-    
+
         // Get only the subjects from the data returned by database, and map them to a dto
         var subjectGroups = subjectMembers.Select(x => mapper.Map<SubjectGroupDto>(x.SubjectGroup));
 

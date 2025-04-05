@@ -109,12 +109,14 @@ public class UNPHUClient : IUNPHUClient
         var content = await response.Content.ReadAsStringAsync();
         var result = JsonConvert.DeserializeObject<StudentEnrolledSubjectsDto>(content);
 
-        var subjectGroups = result?.Data?.Select(x => new SubjectGroup
-        {
-            Code = x.GroupSubjectCode,
-            Name = x.SubjectName,
-            Credits = x.Credits,
-        }).ToList();
+        var subjectGroups = result?.Data?
+            .Where(x => x.Observation?.ToUpper() != "R")
+            .Select(x => new SubjectGroup
+            {
+                Code = x.GroupSubjectCode,
+                Name = x.SubjectName,
+                Credits = x.Credits,
+            }).ToList();
 
         return subjectGroups;
     }
