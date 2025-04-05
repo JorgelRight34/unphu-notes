@@ -25,6 +25,23 @@ public class NoteRepository(ApplicationDbContext context, IMapper mapper) : INot
         return note;
     }
 
+    public async Task<Note?> DeleteAsync(int id)
+    {
+        var note = await context.Notes.FindAsync(id);
+        if (note == null) return null;
+
+        context.Notes.Remove(note);
+        await context.SaveChangesAsync();
+
+        return note;
+    }
+
+    public async Task<Note?> GetByIdAsync(int id)
+    {
+        var note = await context.Notes.FindAsync(id);
+        return note;
+    }
+
     public async Task<IEnumerable<Note>> GetGroupNotesAsync(int groupId)
     {
         var subjectGroup = await context.SubjectGroups.FindAsync(groupId);

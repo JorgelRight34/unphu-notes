@@ -69,6 +69,23 @@ public class SubjectGroupRepository(
         return student;
     }
 
+    public async Task<SubjectGroup?> DeleteByIdAsync(int id)
+    {
+        var subjectGroup = await context.SubjectGroups.FindAsync(id);
+        if (subjectGroup == null) return null;
+
+        context.SubjectGroups.Remove(subjectGroup);
+        await context.SaveChangesAsync();
+
+        return subjectGroup;
+    }
+
+    public async Task<SubjectGroup?> GetByIdAsync(int id)
+    {
+        var subjectGroup = await context.SubjectGroups.FindAsync(id);
+        return subjectGroup;
+    }
+
     /// <summary>Gets a student's enrolled subject groups.</summary>
     /// <param name="username">Student ID to lookup</param>
     /// <returns>List of enrolled subjects or null if none found</returns>
