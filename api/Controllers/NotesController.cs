@@ -11,9 +11,27 @@ namespace api.Controllers;
 public class NotesController(INoteRepository noteRepository, IMapper mapper) : ApiBaseController
 {
     [HttpPost]
-    public async Task<ActionResult<NoteDto>> CreateNote([FromBody] CreateNoteDto request)
+    public async Task<ActionResult<NoteDto>> Create([FromBody] CreateNoteDto request)
     {
         var note = await noteRepository.CreateAsync(request);
         return Ok(mapper.Map<NoteDto>(note));
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<NoteDto>> GetById([FromRoute] int id)
+    {
+        var note = await noteRepository.GetByIdAsync(id);
+        if (note == null) return NotFound();
+
+        return mapper.Map<NoteDto>(note);
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> Delete([FromRoute] int id)
+    {
+        var note = await noteRepository.DeleteAsync(id);
+        if (note == null) return NotFound();
+
+        return NoContent();
     }
 }
