@@ -2,6 +2,7 @@ using System;
 using System.Security.Claims;
 using System.Text;
 using api.Data;
+using api.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -23,8 +24,7 @@ public static class IdentityServiceExtensions
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = false,
-                ValidIssuer = config["Issuer"],
-                ValidateIssuer = true,
+                ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
                 RoleClaimType = ClaimTypes.Role

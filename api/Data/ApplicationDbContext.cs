@@ -1,4 +1,5 @@
 using System;
+using api.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,10 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
     {
     }
+    
+    public DbSet<SubjectGroup> SubjectGroups { get; set; }
+    public DbSet<SubjectGroupMember> SubjectGroupMembers { get; set; }
+    public DbSet<Note> Notes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
