@@ -11,5 +11,5 @@ public interface IUNPHUClient
     Task<StudentDataDto?> GetStudentAsync(string username);
     Task<PeriodDto?> GetCurrentPeriodAsync();
     Task<StudentCareerDto?> GetStudentCareerAsync(int id);
-    Task<List<SubjectGroup>?> GetStudentEnrolledSubjectsAsync(AppUser user, int year, int periodId);
+    Task<List<EnrolledSubjectDto>?> GetStudentEnrolledSubjectsAsync(AppUser user, int year, int periodId);
 }

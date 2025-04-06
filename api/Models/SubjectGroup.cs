@@ -14,6 +14,8 @@ public class SubjectGroup
     [Required]
     public string? Name { get; set; }
     public int Credits { get; set; }
+    public string? ScheduleText { get; set; }
+    public string? TeacherName { get; set; } // This is only on the MVP where teachers don't have an account yet
     public string? TeacherId { get; set; }
 
     // Navigation properties

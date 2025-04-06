@@ -100,7 +100,7 @@ public class UNPHUClient : IUNPHUClient
     /// Fetches official enrollment data from UNPHU's legacy API for the current year/period.
     /// Requires valid UnphuId, CareerId and an active academic period.
     /// </remarks>
-    public async Task<List<SubjectGroup>?> GetStudentEnrolledSubjectsAsync(AppUser user, int year, int periodId)
+    public async Task<List<EnrolledSubjectDto>?> GetStudentEnrolledSubjectsAsync(AppUser user, int year, int periodId)
     {
         string url = $"legacy/officially-enrolled-subjects/?Ano={year}&IdPersona={user.UnphuId}&IdPeriodo={periodId}&IdCarrera={user.CareerId}";
         var response = await _httpClient.GetAsync(url);
@@ -109,14 +109,7 @@ public class UNPHUClient : IUNPHUClient
         var content = await response.Content.ReadAsStringAsync();
         var result = JsonConvert.DeserializeObject<StudentEnrolledSubjectsDto>(content);
 
-        var subjectGroups = result?.Data?
-            .Where(x => x.Observation?.ToUpper() != "R")
-            .Select(x => new SubjectGroup
-            {
-                Code = x.GroupSubjectCode,
-                Name = x.SubjectName,
-                Credits = x.Credits,
-            }).ToList();
+        var subjectGroups = result?.Data?.ToList();
 
         return subjectGroups;
     }

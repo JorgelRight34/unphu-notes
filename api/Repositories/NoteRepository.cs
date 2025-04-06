@@ -54,4 +54,10 @@ public class NoteRepository(ApplicationDbContext context, IFileUploadService fil
 
         return notes;
     }
+
+    public async Task<int> SaveChangesAsync()
+    {
+        var result = await context.SaveChangesAsync();
+        return result;
+    }
 }

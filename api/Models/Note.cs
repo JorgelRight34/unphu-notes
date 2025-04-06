@@ -12,12 +12,11 @@ public class Note
     public int SubjectGroupId { get; set; }
     [Required]
     public string? StudentId { get; set; }
-    [Required]
     [Url]
     public string? Url { get; set; }
     public string? PublicId { get; set; }
     [Required]
-    public DateTime DateTime { get; set; } = DateTime.Now;
+    public DateTime Date { get; set; } = DateTime.Now;
 
     // Navigation properties
     [ForeignKey("SubjectGroupId")]

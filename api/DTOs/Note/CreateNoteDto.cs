@@ -10,7 +10,5 @@ public class CreateNoteDto
     [Required]
     public string? StudentId { get; set; }
     [Required]
-    [Url]
-    public string? Url { get; set; }
     public DateTime DateTime { get; set; } = DateTime.Now;
 }

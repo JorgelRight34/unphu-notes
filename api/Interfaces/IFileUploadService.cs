@@ -5,6 +5,6 @@ namespace api.Interfaces;
 
 public interface IFileUploadService
 {
-    Task<ImageUploadResult> AddFileAsync(IFormFile file);
+    Task<RawUploadResult> AddFileAsync(IFormFile file);
     Task<DeletionResult> DeleteFileAsync(string publicId);
 }

@@ -29,12 +29,31 @@ public class NotesController(INoteRepository noteRepository, IFileUploadService 
 
         note.PublicId = fileResult.PublicId;
         note.Url = fileResult.Url.ToString();
+        await noteRepository.SaveChangesAsync();
 
         return Ok(new FileDto
         {
             Url = fileResult.SecureUrl.AbsoluteUri,
             PublicId = fileResult.PublicId
         });
+    }
+
+    [HttpDelete("{id:int}/delete-file")]
+    public async Task<ActionResult> DeleteFile([FromRoute] int id)
+    {
+        var note = await noteRepository.GetByIdAsync(id);
+        if (note == null) return NotFound("Note not found");
+
+        if (note.PublicId == null) return BadRequest("No file to delete");
+
+        var result = await fileUploadService.DeleteFileAsync(note.PublicId);
+        if (result.Error != null) return BadRequest(result.Error.Message);
+
+        note.PublicId = null;
+        note.Url = null;
+        await noteRepository.SaveChangesAsync();
+
+        return NoContent();
     }
 
     [HttpGet("{id:int}")]
