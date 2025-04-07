@@ -3,3 +3,4 @@ api/appsettings.Development.json
 frontend/node_modules
 api/obj/
 api/bin
+api/app.db

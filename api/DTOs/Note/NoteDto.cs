@@ -11,8 +11,7 @@ public class NoteDto
     public int SubjectGroupId { get; set; }
     [Required]
     public string? StudentId { get; set; }
-    [Required]
     [Url]
     public string? Url { get; set; }
-    public DateTime DateTime { get; set; } = DateTime.Now;
+    public DateTime Date { get; set; }
 }

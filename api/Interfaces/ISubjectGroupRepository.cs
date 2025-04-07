@@ -8,7 +8,8 @@ namespace api.Interfaces;
 public interface ISubjectGroupRepository
 {
     Task<AppUser> AssignStudentToSubjectGroups(AppUser student);
-    Task<List<SubjectGroupDto>?> GetUserSubjectGroups(string username);
+    Task<SubjectGroupMember?> GetGroupMember(string username, int subjectGroupId);
+    Task<List<SubjectGroup?>?> GetUserSubjectGroups(string username);
     Task<SubjectGroup?> GetByIdAsync(int id);
     Task<SubjectGroup?> DeleteByIdAsync(int id);
 }

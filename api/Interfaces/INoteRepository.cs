@@ -10,4 +10,5 @@ public interface INoteRepository
     Task<Note?> GetByIdAsync(int id);
     Task<Note?> DeleteAsync(int id);
     Task<IEnumerable<Note>> GetGroupNotesAsync(int groupId);
+    Task<int> SaveChangesAsync();
 }

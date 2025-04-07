@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace api.Controllers
 {
     public class AuthController(
-        IAuthRepository authRepository, 
-        ISubjectGroupRepository subjectGroupRepository, 
-        ITokenService tokenService, 
+        IAuthRepository authRepository,
+        ISubjectGroupRepository subjectGroupRepository,
+        ITokenService tokenService,
         IMapper mapper
     ) : ApiBaseController
     {
@@ -40,9 +40,6 @@ namespace api.Controllers
         public async Task<ActionResult<List<SubjectGroupDto>>> GetSubjectGroups()
         {
             var username = User.GetUsername();
-            if (username == null) return BadRequest();
-
-            Console.WriteLine("fetching");
 
             var subjectGroups = await subjectGroupRepository.GetUserSubjectGroups(username);
             Console.WriteLine(subjectGroups);

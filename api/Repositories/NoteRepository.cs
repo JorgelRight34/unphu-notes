@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories;
 
-public class NoteRepository(ApplicationDbContext context, IMapper mapper) : INoteRepository
+public class NoteRepository(ApplicationDbContext context, IFileUploadService fileUploadService, IMapper mapper) : INoteRepository
 {
     /// <summary>
     /// Creates a new note from the provided data transfer object (DTO).
@@ -33,6 +33,9 @@ public class NoteRepository(ApplicationDbContext context, IMapper mapper) : INot
         context.Notes.Remove(note);
         await context.SaveChangesAsync();
 
+        var deleteFileResult = await fileUploadService.DeleteFileAsync(note.PublicId!);
+        if (deleteFileResult.Result != "ok") throw new Exception(deleteFileResult.Error.Message);
+
         return note;
     }
 
@@ -50,5 +53,11 @@ public class NoteRepository(ApplicationDbContext context, IMapper mapper) : INot
         var notes = await context.Notes.Where(x => x.SubjectGroupId == groupId).ToListAsync();
 
         return notes;
+    }
+
+    public async Task<int> SaveChangesAsync()
+    {
+        var result = await context.SaveChangesAsync();
+        return result;
     }
 }

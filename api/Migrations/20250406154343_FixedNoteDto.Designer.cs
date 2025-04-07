@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -10,9 +11,11 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250406154343_FixedNoteDto")]
+    partial class FixedNoteDto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.3");
@@ -187,15 +190,12 @@ namespace api.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
 
-<<<<<<< HEAD
-=======
                     b.Property<int>("LastPeriodLoginId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("LastPeriodLoginYear")
                         .HasColumnType("INTEGER");
 
->>>>>>> a59dd67a9f49817c9079eeb04162609e09430e0c
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
 
@@ -253,14 +253,10 @@ namespace api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-<<<<<<< HEAD
-                    b.Property<DateTime>("DateTime")
-=======
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PublicId")
->>>>>>> a59dd67a9f49817c9079eeb04162609e09430e0c
                         .HasColumnType("TEXT");
 
                     b.Property<string>("StudentId")
@@ -271,10 +267,6 @@ namespace api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Url")
-<<<<<<< HEAD
-                        .IsRequired()
-=======
->>>>>>> a59dd67a9f49817c9079eeb04162609e09430e0c
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -303,11 +295,6 @@ namespace api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-<<<<<<< HEAD
-                    b.Property<string>("TeacherId")
-                        .HasColumnType("TEXT");
-
-=======
                     b.Property<string>("ScheduleText")
                         .HasColumnType("TEXT");
 
@@ -317,7 +304,6 @@ namespace api.Migrations
                     b.Property<string>("TeacherName")
                         .HasColumnType("TEXT");
 
->>>>>>> a59dd67a9f49817c9079eeb04162609e09430e0c
                     b.HasKey("Id");
 
                     b.HasIndex("TeacherId");
