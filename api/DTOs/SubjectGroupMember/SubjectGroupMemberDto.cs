@@ -2,22 +2,16 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using api.DTOs.SubjectGroup;
 using api.DTOs.User;
-using api.Models;
 
-namespace api.DTOs.Note;
+namespace api.DTOs.SubjectGroupMember;
 
-public class NoteDto
-{
-    [Required]
+public class SubjectGroupMemberDto
+{   
     public int Id { get; set; }
     [Required]
-    public int SubjectGroupId { get; set; }
-    [Required]
     public string? StudentId { get; set; }
-    [Url]
-    public string? Url { get; set; }
-    public DateTime Date { get; set; }
-
+    [Required]
+    public int SubjectGroupId { get; set;}
     public UserDto? Student { get; set; }
     public SubjectGroupDto? SubjectGroup { get; set; }
 }

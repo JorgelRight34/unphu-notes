@@ -1,6 +1,7 @@
 using System;
 using api.DTOs.Note;
 using api.DTOs.SubjectGroup;
+using api.DTOs.SubjectGroupMember;
 using api.Extensions;
 using api.Interfaces;
 using AutoMapper;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
 
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class GroupsController(
     ISubjectGroupRepository subjectGroupRepository,
     INoteRepository noteRepository,
@@ -16,7 +18,6 @@ public class GroupsController(
 ) : ApiBaseController
 {
     [HttpGet]
-    [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<ActionResult<IEnumerable<SubjectGroupDto>>> GetAll()
     {
         // Get all subject groups
@@ -29,22 +30,24 @@ public class GroupsController(
     }
 
     [HttpGet("{id:int}/notes")]
-    [Authorize]
     public async Task<ActionResult<IEnumerable<NoteDto>>> GetSubjectNotes([FromRoute] int id)
     {
         // Prevents the user from accessing other groups notes
         var groupMember = await subjectGroupRepository.GetGroupMember(User.GetUsername(), id);
         if (groupMember == null) return BadRequest("You are not a member of this group.");
 
+        // Get group
+        var group = await subjectGroupRepository.GetByIdAsync(id);
+        if (group == null) return NotFound("Group doesn't exist");
+
         // Get the notes related to the subject with the given id
         var notes = await noteRepository.GetGroupNotesAsync(id);
         var noteDtos = notes.Select(mapper.Map<NoteDto>);   // Map them to DTOs
 
-        return Ok(notes);
+        return Ok(noteDtos);
     }
 
     [HttpGet("{id:int}")]
-    [Authorize]
     public async Task<ActionResult<SubjectGroupDto>> GetById([FromRoute] int id)
     {
         // Get a subject group by id
@@ -52,6 +55,18 @@ public class GroupsController(
         if (subjectGroup == null) return NotFound();    // Return not found if null
 
         return mapper.Map<SubjectGroupDto>(subjectGroup);   // Return mapped model
+    }
+
+    [HttpGet("{id:int}/members")]
+    public async Task<ActionResult<SubjectGroupMemberDto>> GetGroupMembers([FromRoute] int id)
+    {
+        var subjectGroup = await subjectGroupRepository.GetByIdAsync(id);
+        if (subjectGroup == null) return NotFound("Group not found");
+
+        var members = await subjectGroupRepository.GetGroupMembers(id);
+        var memberDtos = members.Select(mapper.Map<SubjectGroupMemberDto>);
+        
+        return Ok(memberDtos);
     }
 
     [HttpDelete("{id:int}")]

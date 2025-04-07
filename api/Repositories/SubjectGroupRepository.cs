@@ -117,6 +117,16 @@ public class SubjectGroupRepository(
         return groupMember;
     }
 
+    public async Task<List<SubjectGroupMember>> GetGroupMembers(int subjectGroupId)
+    {
+        var members = await context.SubjectGroupMembers
+            .Where(x => x.SubjectGroupId == subjectGroupId)
+            .Include(x => x.Student)
+            .ToListAsync();
+
+        return members;
+    }
+
     /// <summary>Gets a student's enrolled subject groups.</summary>
     /// <param name="username">Student ID to lookup</param>
     /// <returns>List of enrolled subjects or null if none found</returns>

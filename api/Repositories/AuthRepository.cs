@@ -29,7 +29,7 @@ public class AuthRepository(
     /// </remarks>
     public async Task<AppUser?> CreateFullStudent(AppUser student)
     {
-        if (student.UserName == null) return null;  // Avoid empty usernames
+        if (student.UserName == null) throw new Exception("Empty username");  // Avoid empty usernames
 
         // Get all the data of the student from UNPHU's api, includes career, names, etc.
         var studentData = await unphuClient.GetStudentAsync(student.UserName);
@@ -70,8 +70,10 @@ public class AuthRepository(
 
         // Create user from scratch
         var user = mapper.Map<AppUser>(payload);
+        user.UserName = username;
         user = await CreateFullStudent(user);  // Fill all the missing information about user
 
+        Console.WriteLine("Tu estas");
         return user;
     }
 

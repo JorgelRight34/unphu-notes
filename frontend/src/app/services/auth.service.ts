@@ -5,26 +5,33 @@ import { tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  baseUrl = environment.apiUrl;
+  baseUrl = environment.apiUrl + 'auth/';
   user = signal<User | null>(null);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   login(token: string) {
+    // Log user in, save the token and set the user.
     console.log(token);
-    return this.http.post<User>(this.baseUrl + `auth/login`, { token }).pipe(
-      tap(data => {
-        this.user.set(data);
-        localStorage.setItem("accessToken", data.token)
+    return this.http.post<User>(this.baseUrl + `login`, { token }).pipe(
+      tap((data) => {
+        this.user.set(data); // Set user
+        localStorage.setItem('accessToken', data.token); // Save token
         return data;
       })
-    )
+    );
   }
 
   logout() {
-    localStorage.removeItem("accessToken");
+    this.user.set(null); // Set user to null
+    localStorage.removeItem('accessToken'); // Remove token
+  }
+
+  loadUser() {
+    // Get user information (username, email, etc.)
+    return this.http.get<User>(this.baseUrl);
   }
 }

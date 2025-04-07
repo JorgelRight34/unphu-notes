@@ -2,6 +2,7 @@ using System;
 using api.Data;
 using api.DTOs.Note;
 using api.DTOs.SubjectGroup;
+using api.DTOs.SubjectGroupMember;
 using api.DTOs.UNPHUClient;
 using api.DTOs.User;
 using api.Models;
@@ -20,6 +21,9 @@ public class AutoMapperProfiles : Profile
 
         // SubjectGroup
         CreateMap<SubjectGroup, SubjectGroupDto>();
+
+        // SubjectGroupMember
+        CreateMap<SubjectGroupMember, SubjectGroupMemberDto>();
 
         // Notes
         CreateMap<Note, NoteDto>();
