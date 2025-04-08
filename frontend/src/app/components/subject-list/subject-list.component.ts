@@ -9,7 +9,7 @@ import { SubjectCardComponent } from '../subject-card/subject-card.component';
   styleUrl: './subject-list.component.css'
 })
 export class SubjectListComponent {
-  subjects = computed(() => this.groupService.getEnrolledGroups()());
+  subjects = computed(() => this.groupService.getEnrolledGroups());
 
   constructor(private groupService: GroupService) { }
 }

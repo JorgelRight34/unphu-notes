@@ -9,7 +9,7 @@ import { GroupMember } from '../models/groupMember';
   providedIn: 'root',
 })
 export class GroupService {
-  baseUrl = environment.apiUrl + '/groups';
+  baseUrl = environment.apiUrl + 'groups/';
   private groups = signal<Group[]>([]);
 
   constructor(private http: HttpClient) { }
@@ -23,7 +23,7 @@ export class GroupService {
       next: (data) => this.groups.set(data),
     });
 
-    return this.groups;
+    return this.groups();
   }
 
   getGroupNotes(id: number) {
