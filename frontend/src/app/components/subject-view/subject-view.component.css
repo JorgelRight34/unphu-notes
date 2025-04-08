@@ -1,0 +1,8 @@
+.arrow:hover {
+  cursor: pointer;
+}
+
+.note-list {
+  height: 80dvh;
+  overflow-y: auto;
+}

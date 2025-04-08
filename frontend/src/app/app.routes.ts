@@ -14,13 +14,18 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
-        path: 'subject:/id',
-        loadComponent: () => import('./components/subject-view/subject-view.component').then((m) => m.SubjectViewComponent),
-      }
-    ]
+        path: 'subject/:id',
+        loadComponent: () =>
+          import('./components/subject-view/subject-view.component').then(
+            (m) => m.SubjectViewComponent
+          ),
+      },
+    ],
   },
+  /* temporary fix
   {
     path: '**',
     redirectTo: '/',
   },
+  */
 ];

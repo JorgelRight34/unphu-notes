@@ -1,24 +1,25 @@
 <header>
-    <nav class="nav d-flex align-items-center bg-white border-bottom row p-3 px-lg-5">
-        <div class="row mx-0">
-            <div class="col-lg-6">
-                <!-- Header -->
-                <div class="me-auto">
-                    <h3 class="mb-0">UNPHU Notes</h3>
-                </div>
-            </div>
-            <div class="col-lg-6 d-flex justify-content-end">
-                <div class="d-flex flex-wrap">
-                    <!-- Bookmarked notes -->
-                    <a routerLink="/home">Bookmark</a>
-                    <!-- User Card -->
-
-                    @if (user()) {
-                    <app-user-card [user]="user()!" />
-                    }
-                </div>
-            </div>
+  <nav
+    class="nav d-flex align-items-center bg-white border-bottom row p-3 px-lg-5 mx-0"
+  >
+    <div class="row mx-0">
+      <div class="col-lg-6">
+        <!-- Header -->
+        <div class="me-auto">
+          <h3 class="text-dark-green mb-0">UNPHU Notes</h3>
         </div>
+      </div>
+      <div class="col-lg-6 d-flex justify-content-end">
+        <div class="d-flex flex-wrap">
+          <!-- Bookmarked notes -->
+          <a routerLink="/home">Bookmark</a>
+          <!-- User Card -->
 
-    </nav>
+          @if (user()) {
+          <app-user-card [user]="user()!" />
+          }
+        </div>
+      </div>
+    </div>
+  </nav>
 </header>

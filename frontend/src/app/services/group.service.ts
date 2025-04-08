@@ -12,11 +12,11 @@ export class GroupService {
   baseUrl = environment.apiUrl + 'groups/';
   private groups = signal<Group[]>([]);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getEnrolledGroups() {
     // Get current user enrolled subjects if not fetched
-    if (this.groups().length > 0) return this.groups;
+    if (this.groups().length > 0) return this.groups();
 
     // Fetch the groups from the API and set them to the signal
     this.http.get<Group[]>(this.baseUrl).subscribe({

@@ -1,41 +1,80 @@
-import { TitleCasePipe } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { GroupService } from '../../services/group.service';
-import { Group } from '../../models/group';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Note } from '../../models/note';
 import { GroupMember } from '../../models/groupMember';
+import { NoteCardComponent } from '../note-card/note-card.component';
+import { map, of } from 'rxjs';
+import { CreateNoteButtonComponent } from '../create-note-button/create-note-button.component';
 
 @Component({
   selector: 'app-subject-view',
-  imports: [TitleCasePipe],
+  imports: [NoteCardComponent, CreateNoteButtonComponent],
   templateUrl: './subject-view.component.html',
-  styleUrl: './subject-view.component.css'
+  styleUrl: './subject-view.component.css',
 })
 export class SubjectViewComponent {
-  days = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
+  week = signal<number>(1);
   notes = signal<Note[]>([]);
   members = signal<GroupMember[]>([]);
+  groupId = signal<number | null>(null);
 
-  constructor(private groupService: GroupService, private router: Router) { }
+  constructor(
+    private groupService: GroupService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    const groupId = this.router.getCurrentNavigation()?.extras.state?.['groupId'] as string;
-    const groupIdNumber = Number(groupId);
+    this.route.params
+      .pipe(
+        map((params) => {
+          const groupId = Number(params['id']);
 
-    if (!isNaN(groupIdNumber)) {
-      // Get group notes
-      this.groupService.getGroupNotes(groupIdNumber).subscribe({
-        next: (data) => this.notes.set(data)
-      })
+          if (isNaN(groupId)) {
+            this.router.navigate(['/']);
+            return of(null); // Return empty observable
+          }
 
-      // Get group members
-      this.groupService.getGroupMembers(groupIdNumber).subscribe({
-        next: (data) => this.members.set(data)
-      })
+          this.groupId.set(groupId);
 
-    } else {
-      this.router.navigate(['/index']);
-    }
+          this.groupService
+            .getGroupMembers(groupId)
+            .pipe(
+              map((data) => {
+                this.members.set(data);
+                return data;
+              })
+            )
+            .subscribe();
+
+          // Return combined observables
+          this.groupService
+            .getGroupNotes(groupId)
+            .pipe(
+              map((notes) => {
+                this.notes.set(notes);
+                return notes;
+              })
+            )
+            .subscribe();
+
+          return params;
+        })
+      )
+      .subscribe();
+  }
+
+  changeWeekBy(n: number) {
+    if (this.week() + n < 1) return;
+    this.week.update((prev) => prev + n);
+  }
+
+  handleAddNote(note: Note) {
+    this.notes.update((prev) => [...prev, note]);
+  }
+
+  handleOnDelete(note: Note) {
+    this.notes.update((prev) => [...prev.filter((n) => n.id != note.id)]);
   }
 }

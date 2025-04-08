@@ -1,15 +1,15 @@
 import { Component, input } from '@angular/core';
 import { Group } from '../../models/group';
-import { RouterLink } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-subject-card',
-  imports: [RouterLink],
+  imports: [RouterModule],
   templateUrl: './subject-card.component.html',
-  styleUrl: './subject-card.component.css'
+  styleUrl: './subject-card.component.css',
 })
 export class SubjectCardComponent {
   subject = input.required<Group>();
 
-  constructor() { }
+  constructor(private router: Router) {}
 }
