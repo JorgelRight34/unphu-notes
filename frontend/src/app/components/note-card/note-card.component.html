@@ -1,0 +1,9 @@
+<div class="card">
+    <div className="p-3">
+        <app-user-card [user]="note().student" />
+    </div>
+    <img [src]="note().url" alt="Note image" card="img-fluid" />
+    <div class="card-body p-3">
+        <span class="text-muted">{{ note().date }}</span>
+    </div>
+</div>

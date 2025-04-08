@@ -1,1 +1,24 @@
-<header></header>
+<header>
+    <nav class="nav bg-white row p-3 px-lg-5">
+        <!-- Header -->
+        <div class="me-auto">
+            <h3>UNPHU Notes</h3>
+        </div>
+        <!-- Options -->
+        <div class="d-flex justify-content-end">
+            <!-- Options list -->
+            <ul class="nav nav-pills">
+                <!-- Bookmarked notes -->
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/home">Bookmark</a>
+                </li>
+                <!-- User Card -->
+                <li class="nav-item">
+                    @if (user()) {
+                    <app-user-card [user]="user()!" />
+                    }
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

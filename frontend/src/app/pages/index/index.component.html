@@ -1,1 +1,11 @@
-<p>index works!</p>
+<app-navbar />
+<main class="row mx-0">
+    <!-- Subjects -->
+    <div class="col-lg-3 bg-white shadow-lg">
+        <app-subject-list />
+    </div>
+    <!-- Notes -->
+    <div class="col-lg-9 bg-light">
+        <router-outlet></router-outlet>
+    </div>
+</main>

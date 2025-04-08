@@ -1,0 +1,9 @@
+<div class="row mx-0">
+    <div class="col-3">
+        <img [src]="user().profilePic" [alt]="user().username" class="rounded-cirlce" width="50" height="50" />
+    </div>
+    <div class="col-9 d-flex flex-column justify-content-center">
+        <span class="text-truncate">{{ user().username }}</span>
+        <span class="text-truncate">{{ user().email }}</span>
+    </div>
+</div>

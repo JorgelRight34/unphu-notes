@@ -1,0 +1,5 @@
+<div class="d-flex flex-column flex-wrap gap-3 justify-content-center">
+    @for (subject of subjects(); track subject.id) {
+    <app-subject-card [subject]="subject" />
+    }
+</div>

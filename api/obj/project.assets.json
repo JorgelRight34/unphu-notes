@@ -8124,24 +8124,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Jorge Lorenzo\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\pablo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jorge Lorenzo\\Desktop\\unphu-notes\\api\\api.csproj",
+      "projectUniqueName": "C:\\Users\\pablo\\Desktop\\unphu-notes\\api\\api.csproj",
       "projectName": "api",
-      "projectPath": "C:\\Users\\Jorge Lorenzo\\Desktop\\unphu-notes\\api\\api.csproj",
-      "packagesPath": "C:\\Users\\Jorge Lorenzo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jorge Lorenzo\\Desktop\\unphu-notes\\api\\obj\\",
+      "projectPath": "C:\\Users\\pablo\\Desktop\\unphu-notes\\api\\api.csproj",
+      "packagesPath": "C:\\Users\\pablo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\pablo\\Desktop\\unphu-notes\\api\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Jorge Lorenzo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\pablo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8249,7 +8244,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
