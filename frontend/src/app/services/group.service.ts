@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Group } from '../models/group';
 import { Note } from '../models/note';
@@ -9,13 +9,21 @@ import { GroupMember } from '../models/groupMember';
   providedIn: 'root',
 })
 export class GroupService {
-  baseUrl = environment.apiUrl + '/groups';
+  baseUrl = environment.apiUrl + 'groups/';
+  private groups = signal<Group[]>([]);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getEnrolledGroups() {
-    // Get current user enrolled subjects
-    return this.http.get<Group[]>(this.baseUrl);
+    // Get current user enrolled subjects if not fetched
+    if (this.groups().length > 0) return this.groups;
+
+    // Fetch the groups from the API and set them to the signal
+    this.http.get<Group[]>(this.baseUrl).subscribe({
+      next: (data) => this.groups.set(data),
+    });
+
+    return this.groups();
   }
 
   getGroupNotes(id: number) {

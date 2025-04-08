@@ -12,6 +12,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/index/index.component').then((m) => m.IndexComponent),
     canActivate: [authGuard],
+    children: [
+      {
+        path: 'subject:/id',
+        loadComponent: () => import('./components/subject-view/subject-view.component').then((m) => m.SubjectViewComponent),
+      }
+    ]
   },
   {
     path: '**',
