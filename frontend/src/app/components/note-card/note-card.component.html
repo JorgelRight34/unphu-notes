@@ -6,5 +6,13 @@
   <div class="card-body p-3">
     <span class="text-muted">{{ note().date | date : "medium" }}</span>
     <button (click)="handleDelete()">Delete</button>
+    <button (click)="handleShowModal()">Comments</button>
   </div>
 </div>
+
+<app-modal [isOpen]="showModal()">
+  <h1 modal-header>Note</h1>
+  @if (showModal()) {
+  <app-note-comments [note]="note()" />
+  }
+</app-modal>

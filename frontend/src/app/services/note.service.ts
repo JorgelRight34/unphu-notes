@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Note } from '../models/note';
 import { environment } from '../../environments/environment';
 import { tap } from 'rxjs';
+import { NoteComment } from '../models/noteComment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { tap } from 'rxjs';
 export class NoteService {
   baseUrl = environment.apiUrl + 'notes/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   createNote(subjectGroupId: number, file: File) {
     const data = new FormData();
@@ -22,5 +23,9 @@ export class NoteService {
 
   deleteNote(id: number) {
     return this.http.delete(this.baseUrl + id);
+  }
+
+  getNoteComments(id: number) {
+    return this.http.get<NoteComment[]>(this.baseUrl + id + '/comments');
   }
 }

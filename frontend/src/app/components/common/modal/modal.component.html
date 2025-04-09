@@ -1,0 +1,7 @@
+<div class="modal-overlay" [class.d-none]="!isOpen()">
+    <div class="custom-modal p-3 bg-white">
+        <ng-content select="[modal-header]"></ng-content>
+        <button (click)="close()">Close</button>
+        <ng-content select="[modal-body]"></ng-content>
+    </div>
+</div>
