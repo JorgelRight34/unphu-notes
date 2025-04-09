@@ -15,6 +15,7 @@ public class Comment
     public string? AuthorId { get; set; }
     [Required]
     public string? Content { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
 
     // Navigation properties
     public Note? Note { get; set; }

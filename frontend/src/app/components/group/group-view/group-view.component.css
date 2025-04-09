@@ -1,0 +1,18 @@
+.arrow:hover {
+  cursor: pointer;
+}
+
+.note-list {
+  height: 78dvh;
+  overflow-y: auto;
+}
+
+app-create-note-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.weeks {
+  width: auto;
+}

@@ -1,7 +1,11 @@
 <div class="modal-overlay" [class.d-none]="!isOpen()">
-    <div class="custom-modal p-3 bg-white">
-        <ng-content select="[modal-header]"></ng-content>
-        <button (click)="close()">Close</button>
-        <ng-content select="[modal-body]"></ng-content>
+  <div class="custom-modal bg-white rounded-3" [style.width]="width()">
+    <div class="border-bottom p-3 d-flex align-items-center">
+      <h5 class="mb-0">{{ title() }}</h5>
+      <span (click)="close()" class="material-symbols-outlined hover ms-auto">
+        close
+      </span>
     </div>
+    <ng-content></ng-content>
+  </div>
 </div>

@@ -20,4 +20,5 @@ public class NoteDto
 
     public UserDto? Student { get; set; }
     public SubjectGroupDto? SubjectGroup { get; set; }
+    public IEnumerable<NoteFileDto> NoteFiles { get; set; } = new List<NoteFileDto>();
 }

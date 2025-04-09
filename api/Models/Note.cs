@@ -12,9 +12,8 @@ public class Note
     public int SubjectGroupId { get; set; }
     [Required]
     public string? StudentId { get; set; }
-    [Url]
-    public string? Url { get; set; }
-    public string? PublicId { get; set; }
+    [Required]
+    public int Week { get; set; }
     [Required]
     public DateTime Date { get; set; } = DateTime.Now;
 
@@ -23,4 +22,6 @@ public class Note
     public SubjectGroup? SubjectGroup { get; set; }
     [ForeignKey("StudentId")]
     public AppUser? Student { get; set; }
+    public IEnumerable<Comment>? Comments { get; set; }
+    public IEnumerable<NoteFile> NoteFiles { get; set; } = new List<NoteFile>();
 }

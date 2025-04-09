@@ -13,5 +13,9 @@ public class SubjectGroupDto
     [Required]
     public string? Name { get; set; }
     public int Credits { get; set; }
+    [Required]
+    public string? TeacherName { get; set; }
+    [Required]
+    public string? ScheduleText { get; set; }
     public string? TeacherId { get; set; }
 }

@@ -13,7 +13,6 @@ namespace api.Controllers;
 [Authorize(AuthenticationSchemes = "Bearer")]
 public class GroupsController(
     ISubjectGroupRepository subjectGroupRepository,
-    INoteRepository noteRepository,
     IMapper mapper
 ) : ApiBaseController
 {
@@ -41,7 +40,7 @@ public class GroupsController(
         if (group == null) return NotFound("Group doesn't exist");
 
         // Get the notes related to the subject with the given id
-        var notes = await noteRepository.GetGroupNotesAsync(id, User.GetUsername());
+        var notes = await subjectGroupRepository.GetGroupNotesAsync(id, User.GetUsername());
         var noteDtos = notes.Select(mapper.Map<NoteDto>);   // Map them to DTOs
 
         return Ok(noteDtos);

@@ -14,6 +14,7 @@ public class CommentDto
     [Required]
     public string? AuthorId { get; set; }
     public string? Content { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
 
     // Navigation properties
     public UserDto? Author { get; set; }

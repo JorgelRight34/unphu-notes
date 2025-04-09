@@ -1,0 +1,36 @@
+<!-- Create button -->
+<button class="btn btn-dark-blue" (click)="openModal()">+ Crear Nota</button>
+
+<!-- Add files -->
+<app-modal
+  title="+ Crear Nota | Semana {{ week() }}"
+  [(isOpen)]="showModal"
+  width="75dvw"
+>
+  <div class="p-3 border-bottom pb-3 mb-3">
+    <button
+      class="btn btn-dark-blue px-5"
+      appFileUpload
+      (fileSelected)="handleAddNoteFile($event)"
+    >
+      + Añadir
+    </button>
+  </div>
+  <div class="p-3 border-bottom">
+    <h6>Archivos ({{ files().length }})</h6>
+    <div class="d-flex flex-wrap gap-3 files">
+      @for (file of files() ; track file.lastModified) {
+      <app-note-file (onDelete)="handleOnDelete($event)" [file]="file" />
+      }
+    </div>
+  </div>
+  <div class="p-3 d-flex justify-content-end">
+    <button
+      [disabled]="files().length === 0"
+      class="btn btn-dark-green px-lg-5"
+      (click)="handleCreateNote()"
+    >
+      Crear
+    </button>
+  </div>
+</app-modal>

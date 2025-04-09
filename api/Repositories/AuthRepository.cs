@@ -34,7 +34,10 @@ public class AuthRepository(
         // Get all the data of the student from UNPHU's api, includes career, names, etc.
         var studentData = await unphuClient.GetStudentAsync(student.UserName);
         if (studentData == null) throw new Exception("No student data from UNPHU");
+
+        // Update user
         student.UnphuId = studentData.Id;
+        student.FullName = studentData.Names;
 
         var result = await userManager.CreateAsync(student);   // Save user on database
         if (result.Succeeded)

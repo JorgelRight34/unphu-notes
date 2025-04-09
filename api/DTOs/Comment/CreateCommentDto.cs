@@ -9,4 +9,5 @@ public class CreateCommentDto
     public int NoteId { get; set; }
     [Required]
     public string? Content { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
 }

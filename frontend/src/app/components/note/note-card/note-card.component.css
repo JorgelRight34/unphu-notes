@@ -1,0 +1,12 @@
+img {
+  object-fit: cover;
+}
+
+.img-container {
+  display: flex;
+  justify-content: center;
+}
+
+.note {
+  width: 33dvw;
+}

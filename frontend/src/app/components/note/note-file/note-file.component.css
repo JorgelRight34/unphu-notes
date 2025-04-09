@@ -1,0 +1,13 @@
+.file {
+  height: 25dvh;
+  width: 23dvw;
+}
+
+img {
+  height: 25dvh;
+  object-fit: contain;
+}
+
+.icon {
+  font-size: 5rem;
+}

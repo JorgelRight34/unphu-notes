@@ -113,11 +113,13 @@ public class SubjectGroupRepository(
     /// <param name="username">Username of the student</param>
     public async Task<SubjectGroupMember?> GetGroupMember(string username, int subjectGroupId)
     {
-        var member = await GetGroupMember(username, subjectGroupId);
-        if (member == null) throw new Exception("You are not a member");
-
         var user = await userManager.FindByNameAsync(username);
         if (user == null) throw new Exception("User not found");
+
+        var member = await context.SubjectGroupMembers
+            .Where(x => x.StudentId == user.Id && x.SubjectGroupId == subjectGroupId)
+            .FirstOrDefaultAsync();
+        if (member == null) throw new Exception("You are not a member");
 
         var groupMember = await context.SubjectGroupMembers
             .Where(x => x.StudentId == user.Id && x.SubjectGroupId == subjectGroupId)
@@ -161,5 +163,18 @@ public class SubjectGroupRepository(
         var subjectGroups = subjectMembers.Select(x => x.SubjectGroup);
 
         return subjectGroups.ToList();  // Return list
+    }
+
+       public async Task<IEnumerable<Note>> GetGroupNotesAsync(int groupId, string username)
+    {
+        var subjectGroup = await context.SubjectGroups.FindAsync(groupId);
+        if (subjectGroup == null) throw new Exception("Subject group doesnt' exist");
+
+        var member = await GetGroupMember(username, subjectGroup.Id);
+        if (member == null) throw new Exception("You are not a member");
+
+        var notes = await context.Notes.Include(x => x.NoteFiles).Where(x => x.SubjectGroupId == groupId).ToListAsync();
+
+        return notes;
     }
 }

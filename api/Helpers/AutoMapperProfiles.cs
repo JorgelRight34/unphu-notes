@@ -29,6 +29,7 @@ public class AutoMapperProfiles : Profile
         // Notes
         CreateMap<Note, NoteDto>();
         CreateMap<CreateNoteDto, Note>();
+        CreateMap<NoteFile, NoteFileDto>();
 
         // Comments
         CreateMap<Comment, CommentDto>();

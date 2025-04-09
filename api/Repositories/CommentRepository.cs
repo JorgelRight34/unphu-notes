@@ -26,6 +26,7 @@ public class CommentRepository(
 
         var comment = mapper.Map<Comment>(commentDto);
         comment.AuthorId = member.StudentId;
+        comment.SubjectGroupId = note.SubjectGroupId;
 
         await context.Comments.AddAsync(comment);
         await context.SaveChangesAsync();

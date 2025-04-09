@@ -7,6 +7,7 @@ namespace api.Models;
 public class AppUser : IdentityUser
 {
     public string? ProfilePic { get; set; }
+    public string? FullName { get; set; }
     public int UnphuId { get; set; }
     public int CareerId { get; set; }
     public int LastPeriodLoginYear { get; set; }

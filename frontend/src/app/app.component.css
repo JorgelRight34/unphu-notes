@@ -1,0 +1,14 @@
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  height: 0; /* Default to zero height */
+  overflow: hidden;
+  transition: height 0.2s ease;
+}
+
+.progress-bar.active {
+  height: 3px; /* Only show height when active */
+}

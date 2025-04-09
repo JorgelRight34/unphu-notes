@@ -1,20 +1,17 @@
-<header>
+<header class="p-0">
   <nav
-    class="nav d-flex align-items-center bg-white border-bottom row p-3 px-lg-5 mx-0"
+    class="nav d-flex align-items-center bg-white border-bottom row p-0 px-lg-5 mx-0"
   >
     <div class="row mx-0 mb-0">
-      <div class="col-lg-6">
+      <div class="col-lg-6 d-flex align-items-center">
         <!-- Header -->
         <div class="me-auto">
-          <h3 class="text-dark-green mb-0">UNPHU Notes</h3>
+          <h5 routerLink="/" class="text-dark-green mb-0">UNPHU Notes</h5>
         </div>
       </div>
       <div class="col-lg-6 d-flex justify-content-end">
-        <div class="d-flex flex-wrap">
-          <!-- Bookmarked notes -->
-          <a routerLink="/home">Bookmark</a>
+        <div class="d-flex align-items-center flex-wrap gap-3">
           <!-- User Card -->
-          {{ user()?.email }}
           @if (user()) {
           <app-user-card [user]="user()!" />
           }

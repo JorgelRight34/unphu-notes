@@ -187,6 +187,9 @@ namespace api.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("FullName")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("LastPeriodLoginId")
                         .HasColumnType("INTEGER");
 
@@ -258,7 +261,13 @@ namespace api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("NoteId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SubjectGroupId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -266,6 +275,8 @@ namespace api.Migrations
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("NoteId");
+
+                    b.HasIndex("SubjectGroupId");
 
                     b.ToTable("Comments");
                 });
@@ -279,9 +290,6 @@ namespace api.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PublicId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("StudentId")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -289,8 +297,8 @@ namespace api.Migrations
                     b.Property<int>("SubjectGroupId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Url")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Week")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -299,6 +307,30 @@ namespace api.Migrations
                     b.HasIndex("SubjectGroupId");
 
                     b.ToTable("Notes");
+                });
+
+            modelBuilder.Entity("api.Models.NoteFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("NoteId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NoteId");
+
+                    b.ToTable("NoteFiles");
                 });
 
             modelBuilder.Entity("api.Models.SubjectGroup", b =>
@@ -416,14 +448,22 @@ namespace api.Migrations
                         .IsRequired();
 
                     b.HasOne("api.Models.Note", "Note")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("NoteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.SubjectGroup", "SubjectGroup")
+                        .WithMany()
+                        .HasForeignKey("SubjectGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Author");
 
                     b.Navigation("Note");
+
+                    b.Navigation("SubjectGroup");
                 });
 
             modelBuilder.Entity("api.Models.Note", b =>
@@ -443,6 +483,17 @@ namespace api.Migrations
                     b.Navigation("Student");
 
                     b.Navigation("SubjectGroup");
+                });
+
+            modelBuilder.Entity("api.Models.NoteFile", b =>
+                {
+                    b.HasOne("api.Models.Note", "Note")
+                        .WithMany("NoteFiles")
+                        .HasForeignKey("NoteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Note");
                 });
 
             modelBuilder.Entity("api.Models.SubjectGroup", b =>
@@ -471,6 +522,13 @@ namespace api.Migrations
                     b.Navigation("Student");
 
                     b.Navigation("SubjectGroup");
+                });
+
+            modelBuilder.Entity("api.Models.Note", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("NoteFiles");
                 });
 #pragma warning restore 612, 618
         }
