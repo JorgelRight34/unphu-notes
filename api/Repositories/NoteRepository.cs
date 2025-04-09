@@ -4,11 +4,12 @@ using api.DTOs.Note;
 using api.Interfaces;
 using api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories;
 
-public class NoteRepository(ApplicationDbContext context, IFileUploadService fileUploadService, IMapper mapper) : INoteRepository
+public class NoteRepository(ApplicationDbContext context, IFileUploadService fileUploadService, UserManager<AppUser> userManager, IMapper mapper) : INoteRepository
 {
     /// <summary>
     /// Creates a new note from the provided data transfer object (DTO).
@@ -17,9 +18,13 @@ public class NoteRepository(ApplicationDbContext context, IFileUploadService fil
     /// <returns>
     /// A <see cref="NoteDto"/> representing the created note.
     /// </returns>
-    public async Task<Note> CreateAsync(CreateNoteDto createNoteDto)
+    public async Task<Note> CreateAsync(CreateNoteDto createNoteDto, string username)
     {
+        var user = await userManager.FindByNameAsync(username);
+        if (user == null) throw new Exception("User not found");
+
         var note = mapper.Map<Note>(createNoteDto);
+        note.StudentId = user.Id;
         await context.Notes.AddAsync(note);
         await context.SaveChangesAsync();
         return note;
@@ -43,6 +48,12 @@ public class NoteRepository(ApplicationDbContext context, IFileUploadService fil
     {
         var note = await context.Notes.FindAsync(id);
         return note;
+    }
+
+    public async Task<List<Comment>> GetCommentsAsync(int noteId)
+    {
+        var comments = await context.Comments.Where(x => x.NoteId == noteId).ToListAsync();
+        return comments;
     }
 
     public async Task<IEnumerable<Note>> GetGroupNotesAsync(int groupId)

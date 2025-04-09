@@ -8,13 +8,14 @@ namespace api.Data;
 
 public class ApplicationDbContext : IdentityDbContext<AppUser>
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
-    
+
     public DbSet<SubjectGroup> SubjectGroups { get; set; }
     public DbSet<SubjectGroupMember> SubjectGroupMembers { get; set; }
     public DbSet<Note> Notes { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
