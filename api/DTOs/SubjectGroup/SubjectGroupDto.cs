@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using api.DTOs.Note;
+using api.DTOs.User;
 
 namespace api.DTOs.SubjectGroup;
 

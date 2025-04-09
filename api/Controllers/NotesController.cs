@@ -1,6 +1,7 @@
 using System;
 using api.DTOs.File;
 using api.DTOs.Note;
+using api.Extensions;
 using api.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -12,30 +13,12 @@ namespace api.Controllers;
 public class NotesController(INoteRepository noteRepository, IFileUploadService fileUploadService, IMapper mapper) : ApiBaseController
 {
     [HttpPost]
-    public async Task<ActionResult<NoteDto>> Create([FromBody] CreateNoteDto request)
-    {
-        var note = await noteRepository.CreateAsync(request);
+    public async Task<ActionResult<NoteDto>> Create([FromForm] CreateNoteDto request)
+    {   
+        var username = User.GetUsername();
+        var note = await noteRepository.CreateAsync(request, username);
+
         return Ok(mapper.Map<NoteDto>(note));
-    }
-
-    [HttpPost("{id:int}/add-file")]
-    public async Task<ActionResult<FileDto>> Upload([FromRoute] int id, [FromForm] IFormFile file)
-    {
-        var note = await noteRepository.GetByIdAsync(id);
-        if (note == null) return NotFound();
-
-        var fileResult = await fileUploadService.AddFileAsync(file);
-        if (fileResult.Error != null) return BadRequest(fileResult.Error.Message);
-
-        note.PublicId = fileResult.PublicId;
-        note.Url = fileResult.Url.ToString();
-        await noteRepository.SaveChangesAsync();
-
-        return Ok(new FileDto
-        {
-            Url = fileResult.SecureUrl.AbsoluteUri,
-            PublicId = fileResult.PublicId
-        });
     }
 
     [HttpDelete("{id:int}/delete-file")]

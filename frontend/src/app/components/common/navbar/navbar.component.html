@@ -2,7 +2,7 @@
   <nav
     class="nav d-flex align-items-center bg-white border-bottom row p-3 px-lg-5 mx-0"
   >
-    <div class="row mx-0">
+    <div class="row mx-0 mb-0">
       <div class="col-lg-6">
         <!-- Header -->
         <div class="me-auto">
@@ -14,7 +14,7 @@
           <!-- Bookmarked notes -->
           <a routerLink="/home">Bookmark</a>
           <!-- User Card -->
-
+          {{ user()?.email }}
           @if (user()) {
           <app-user-card [user]="user()!" />
           }
