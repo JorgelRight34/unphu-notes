@@ -9,15 +9,17 @@
     <div class="p-3 border-bottom">
       <h5>Comentarios</h5>
     </div>
-    <!-- Comment form -->
-    <div class="p-3">
-      <app-comment-form [note]="note()" (onSubmit)="handleOnSubmit($event)" />
-    </div>
-    <!-- Comments -->
-    <div class="d-flex flex-column gap-3 p-3">
-      @for (comment of comments() ; track comment.id) {
-      <app-comment-card [comment]="comment" />
-      }
+    <div class="comments">
+      <!-- Comment form -->
+      <div class="p-3">
+        <app-comment-form [note]="note()" (onSubmit)="handleOnSubmit($event)" />
+      </div>
+      <!-- Comments -->
+      <div class="d-flex flex-column gap-3 p-3">
+        @for (comment of comments() ; track comment.id) {
+        <app-comment-card [comment]="comment" />
+        }
+      </div>
     </div>
   </div>
 </div>

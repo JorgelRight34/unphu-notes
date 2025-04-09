@@ -10,6 +10,7 @@ public class UserDto
     [Required]
     [StudentId]
     public string? Username { get; set; }
+    public string? FullName { get; set; }
     [Required]   
     public string? ProfilePic { get; set; }
     public int UnphuId { get; set; }

@@ -3,6 +3,12 @@
 }
 
 .note-list {
-  height: 80dvh;
+  height: 78dvh;
   overflow-y: auto;
+}
+
+.app-create-btn {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }

@@ -4,10 +4,11 @@ import { NoteService } from '../../../services/note.service';
 import { FileUploadDirective } from '../../../directives/file-upload.directive';
 import { Note } from '../../../models/note';
 import { ModalComponent } from '../../common/modal/modal.component';
+import { NoteFileComponent } from '../note-file/note-file.component';
 
 @Component({
   selector: 'app-create-note-button',
-  imports: [FileUploadDirective, ModalComponent],
+  imports: [FileUploadDirective, ModalComponent, NoteFileComponent],
   templateUrl: './create-note-button.component.html',
   styleUrl: './create-note-button.component.css',
 })
@@ -16,6 +17,7 @@ export class CreateNoteButtonComponent {
   onSubmit = output<Note>();
   showModal = model<boolean>(false);
   files = signal<File[]>([]);
+  class = input<string>('');
 
   constructor(
     private noteService: NoteService,
@@ -37,7 +39,23 @@ export class CreateNoteButtonComponent {
     });
   }
 
+  handleOnDelete(file: File) {
+    console.log('deleting');
+    this.files.update((prev) => [
+      ...prev.filter((f) => !this.areFilesEqual(f, file)),
+    ]);
+  }
+
   openModal() {
     this.showModal.set(true);
+  }
+
+  private areFilesEqual(file1: File, file2: File): boolean {
+    return (
+      file1.name === file2.name &&
+      file1.size === file2.size &&
+      file1.type === file2.type &&
+      file1.lastModified === file2.lastModified
+    );
   }
 }

@@ -6,5 +6,5 @@ export interface NoteComment {
   authorId: string;
   content: string;
   author: User;
-  date: string;
+  createdAt: string;
 }

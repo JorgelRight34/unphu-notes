@@ -187,6 +187,9 @@ namespace api.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("FullName")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("LastPeriodLoginId")
                         .HasColumnType("INTEGER");
 

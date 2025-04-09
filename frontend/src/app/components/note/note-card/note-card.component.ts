@@ -2,17 +2,18 @@ import { Component, input, output, signal } from '@angular/core';
 import { Note } from '../../../models/note';
 import { UserCardComponent } from '../../common/user-card/user-card.component';
 import { CloudinarySecurePipe } from '../../../pipes/cloudinary-secure.pipe';
-import { DatePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import { NoteService } from '../../../services/note.service';
 import { ModalComponent } from '../../common/modal/modal.component';
 import { NoteCommentsComponent } from '../note-comments/note-comments.component';
 import { NoteFilesGalleryComponent } from '../note-files-gallery/note-files-gallery.component';
+import { UserPostCardComponent } from '../../common/user-post-card/user-post-card.component';
 
 @Component({
   selector: 'app-note-card',
   imports: [
     NoteFilesGalleryComponent,
-    DatePipe,
+    UserPostCardComponent,
     ModalComponent,
     NoteCommentsComponent,
   ],

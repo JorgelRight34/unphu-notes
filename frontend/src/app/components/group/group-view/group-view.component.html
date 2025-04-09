@@ -1,4 +1,4 @@
-<div class="row mx-0">
+<div class="row position-relative mx-0">
   <!-- Week selector -->
   <div class="d-flex align-items-center bg-white p-3 border rounded shadow-sm">
     <span class="arrow material-symbols-outlined" (click)="changeWeekBy(-1)">
@@ -9,10 +9,6 @@
       arrow_forward
     </span>
   </div>
-  <app-create-note-button
-    (onSubmit)="handleAddNote($event)"
-    [groupId]="groupId() || 0"
-  />
   <!-- Notes -->
   <div class="d-flex flex-column p-3 note-list">
     @for (note of notes(); track note.id) {
@@ -21,4 +17,9 @@
     </div>
     }
   </div>
+  <app-create-note-button
+    class="app-create-btn"
+    (onSubmit)="handleAddNote($event)"
+    [groupId]="groupId() || 0"
+  />
 </div>

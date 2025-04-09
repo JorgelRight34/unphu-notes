@@ -11,6 +11,16 @@
   --secondary-text-color: #fff;
 }
 
+.btn-dark-green {
+  background-color: var(--dark-green-color);
+  color: #fff;
+}
+
+.btn-dark-blue {
+  background-color: var(--dark-blue-color);
+  color: #fff;
+}
+
 .text-dark-green {
   color: var(--dark-green-color);
 }

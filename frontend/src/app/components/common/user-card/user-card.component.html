@@ -3,10 +3,10 @@
 >
   <img
     loading="lazy"
-    class="img-fluid profile-pic me-1"
+    class="img-fluid profile-pic me-2"
     [src]="user().profilePic"
     [alt]="user().username"
-  /><span>{{ user().username | uppercase }}</span>
+  /><span>{{ fullName() | titlecase }}</span>
   <div class="ms-2 d-flex align-items-center hover">
     <span class="material-symbols-outlined me-1">logout</span>
   </div>
