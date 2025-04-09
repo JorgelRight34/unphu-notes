@@ -1,10 +1,12 @@
 <!-- Create button -->
-<button class="btn btn-dark-blue {{ class() }}" (click)="openModal()">
-  + Crear Nota
-</button>
+<button class="btn btn-dark-blue" (click)="openModal()">+ Crear Nota</button>
 
 <!-- Add files -->
-<app-modal title="+ Crear Nota" [(isOpen)]="showModal" width="75dvw">
+<app-modal
+  title="+ Crear Nota | Semana {{ week() }}"
+  [(isOpen)]="showModal"
+  width="75dvw"
+>
   <div class="p-3 border-bottom pb-3 mb-3">
     <button
       class="btn btn-dark-blue px-5"

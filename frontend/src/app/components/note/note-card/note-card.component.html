@@ -3,10 +3,14 @@
     <app-user-post-card [user]="note().student" [date]="note().date" />
   </div>
 
-  <app-note-files-gallery [note]="note()" />
+  <app-note-files-gallery
+    [note]="note()"
+    (onIndexChange)="handleCurrentImageChange($event)"
+  />
 
   <div class="card-body d-flex justify-content-end flex-wrap gap-3 p-2">
     <button class="btn btn-dark-green" (click)="handleDelete()">Delete</button>
+    <a [href]="noteFileUrl()" class="btn btn-dark-green"> Download </a>
     <button class="btn btn-dark-green" (click)="handleShowModal()">
       Comments
     </button>

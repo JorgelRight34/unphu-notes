@@ -1,6 +1,8 @@
 <div class="row position-relative mx-0">
   <!-- Week selector -->
-  <div class="d-flex align-items-center bg-white p-3 border rounded shadow-sm">
+  <div
+    class="weeks mx-auto d-flex align-items-center bg-white p-3 border rounded shadow-sm"
+  >
     <span class="arrow material-symbols-outlined" (click)="changeWeekBy(-1)">
       arrow_back
     </span>
@@ -18,6 +20,7 @@
     }
   </div>
   <app-create-note-button
+    [week]="week()"
     class="app-create-btn"
     (onSubmit)="handleAddNote($event)"
     [groupId]="groupId() || 0"

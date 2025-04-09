@@ -33,8 +33,6 @@ public class NoteRepository(
         var entry = await context.Notes.AddAsync(note);
         await context.SaveChangesAsync();
 
-        Console.WriteLine($"saved note id ${entry.Entity.Id}");
-
         if (createNoteDto.Files != null && createNoteDto.Files.Count > 0)
         {
             foreach (var file in createNoteDto.Files)

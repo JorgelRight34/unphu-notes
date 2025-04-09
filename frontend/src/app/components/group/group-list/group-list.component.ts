@@ -3,7 +3,7 @@ import { GroupService } from '../../../services/group.service';
 import { GroupCardComponent } from '../group-card/group-card.component';
 
 @Component({
-  selector: 'app-subject-list',
+  selector: 'app-group-list',
   imports: [GroupCardComponent],
   templateUrl: './group-list.component.html',
   styleUrl: './group-list.component.css',

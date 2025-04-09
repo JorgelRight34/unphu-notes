@@ -7,8 +7,12 @@
   overflow-y: auto;
 }
 
-.app-create-btn {
+app-create-note-button {
   position: absolute;
   right: 0;
   bottom: 0;
+}
+
+.weeks {
+  width: auto;
 }

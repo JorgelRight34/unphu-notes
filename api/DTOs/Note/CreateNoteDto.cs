@@ -10,5 +10,7 @@ public class CreateNoteDto
     [Required]
     public List<IFormFile>? Files { get; set; }
     [Required]
+    public int Week { get; set; }
+    [Required]
     public DateTime DateTime { get; set; } = DateTime.Now;
 }

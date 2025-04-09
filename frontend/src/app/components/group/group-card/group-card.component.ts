@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { Group } from '../../../models/group';
 
 @Component({
@@ -10,6 +10,4 @@ import { Group } from '../../../models/group';
 })
 export class GroupCardComponent {
   group = input.required<Group>();
-
-  constructor(private router: Router) {}
 }

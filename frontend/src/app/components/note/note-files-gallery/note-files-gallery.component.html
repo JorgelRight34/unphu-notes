@@ -1,1 +1,8 @@
-<gallery [items]="images()" class="gallery"></gallery>
+@if (images().length > 0) {
+<gallery
+  (indexChange)="handleIndexChange($event)"
+  [items]="images()"
+  class="gallery"
+  [id]="`gallery-${note().id}`"
+></gallery>
+}

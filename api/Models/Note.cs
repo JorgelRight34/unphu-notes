@@ -13,6 +13,8 @@ public class Note
     [Required]
     public string? StudentId { get; set; }
     [Required]
+    public int Week { get; set; }
+    [Required]
     public DateTime Date { get; set; } = DateTime.Now;
 
     // Navigation properties

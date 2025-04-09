@@ -17,7 +17,7 @@ export class CreateNoteButtonComponent {
   onSubmit = output<Note>();
   showModal = model<boolean>(false);
   files = signal<File[]>([]);
-  class = input<string>('');
+  week = input.required<number>();
 
   constructor(
     private noteService: NoteService,
@@ -31,12 +31,14 @@ export class CreateNoteButtonComponent {
   handleCreateNote() {
     if (this.groupId() === 0 || this.files().length === 0) return;
 
-    this.noteService.createNote(this.groupId(), this.files()).subscribe({
-      next: (note) => {
-        this.toastr.success('Note created');
-        this.onSubmit.emit(note);
-      },
-    });
+    this.noteService
+      .createNote(this.groupId(), this.files(), this.week())
+      .subscribe({
+        next: (note) => {
+          this.toastr.success('Note created');
+          this.onSubmit.emit(note);
+        },
+      });
   }
 
   handleOnDelete(file: File) {

@@ -297,6 +297,9 @@ namespace api.Migrations
                     b.Property<int>("SubjectGroupId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Week")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("StudentId");
