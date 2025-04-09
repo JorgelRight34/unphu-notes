@@ -16,8 +16,7 @@ public class NotesController(INoteRepository noteRepository, IMapper mapper) : A
     [HttpPost]
     public async Task<ActionResult<NoteDto>> Create([FromForm] CreateNoteDto request)
     {
-        var username = User.GetUsername();
-        var note = await noteRepository.CreateAsync(request, username);
+        var note = await noteRepository.CreateAsync(request, User.GetUsername());
 
         return Ok(mapper.Map<NoteDto>(note));
     }
@@ -25,7 +24,7 @@ public class NotesController(INoteRepository noteRepository, IMapper mapper) : A
     [HttpGet("{id:int}")]
     public async Task<ActionResult<NoteDto>> GetById([FromRoute] int id)
     {
-        var note = await noteRepository.GetByIdAsync(id);
+        var note = await noteRepository.GetByIdAsync(id, User.GetUsername());
         if (note == null) return NotFound();
 
         return mapper.Map<NoteDto>(note);
@@ -34,7 +33,7 @@ public class NotesController(INoteRepository noteRepository, IMapper mapper) : A
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Delete([FromRoute] int id)
     {
-        var note = await noteRepository.DeleteAsync(id);
+        var note = await noteRepository.DeleteAsync(id, User.GetUsername());
         if (note == null) return NotFound();
 
         return NoContent();
@@ -43,7 +42,7 @@ public class NotesController(INoteRepository noteRepository, IMapper mapper) : A
     [HttpGet("{id:int}/comments")]
     public async Task<ActionResult<List<CommentDto>>> GetComments([FromRoute] int id)
     {
-        var comments = await noteRepository.GetCommentsAsync(id);
+        var comments = await noteRepository.GetCommentsAsync(id, User.GetUsername());
         return Ok(mapper.Map<List<CommentDto>>(comments));
     }
 }

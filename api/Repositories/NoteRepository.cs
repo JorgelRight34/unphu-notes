@@ -9,11 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories;
 
-<<<<<<< HEAD
-public class NoteRepository(ApplicationDbContext context, IFileUploadService fileUploadService, UserManager<AppUser> userManager, IMapper mapper) : INoteRepository
-=======
-public class NoteRepository(ApplicationDbContext context, IFileUploadService fileUploadService, IMapper mapper, UserManager<AppUser> userManager) : INoteRepository
->>>>>>> 7922e999fc581cc075ea25dc008a00fa625c4763
+public class NoteRepository(
+    ApplicationDbContext context,
+    IFileUploadService fileUploadService,
+    ISubjectGroupRepository subjectGroupRepository,
+    IMapper mapper
+) : INoteRepository
 {
     /// <summary>
     /// Creates a new note from the provided data transfer object (DTO).
@@ -24,11 +25,11 @@ public class NoteRepository(ApplicationDbContext context, IFileUploadService fil
     /// </returns>
     public async Task<Note> CreateAsync(CreateNoteDto createNoteDto, string username)
     {
-        var user = await userManager.FindByNameAsync(username);
-        if (user == null) throw new Exception("User doesn't exist");
+        var member = await subjectGroupRepository.GetGroupMember(username, createNoteDto.SubjectGroupId);
+        if (member == null) throw new Exception("You are not a member");
 
         var note = mapper.Map<Note>(createNoteDto);
-        note.StudentId = user.Id;
+        note.StudentId = member.StudentId;
 
         if (createNoteDto.File != null)
         {
@@ -44,10 +45,13 @@ public class NoteRepository(ApplicationDbContext context, IFileUploadService fil
         return note;
     }
 
-    public async Task<Note?> DeleteAsync(int id)
+    public async Task<Note?> DeleteAsync(int id, string username)
     {
         var note = await context.Notes.FindAsync(id);
         if (note == null) return null;
+
+        var member = await subjectGroupRepository.GetGroupMember(username, note.SubjectGroupId);
+        if (member == null) throw new Exception("You are not a member");
 
         context.Notes.Remove(note);
         await context.SaveChangesAsync();
@@ -61,22 +65,31 @@ public class NoteRepository(ApplicationDbContext context, IFileUploadService fil
         return note;
     }
 
-    public async Task<Note?> GetByIdAsync(int id)
+    public async Task<Note?> GetByIdAsync(int id, string username)
     {
         var note = await context.Notes.FindAsync(id);
+        if (note == null) return null;
+
+        var member = await subjectGroupRepository.GetGroupMember(username, note.SubjectGroupId);
+        if (member == null) throw new Exception("You are not a member");
+
         return note;
     }
 
-    public async Task<List<Comment>> GetCommentsAsync(int noteId)
+    public async Task<List<Comment>> GetCommentsAsync(int noteId, string username)
     {
+        var note = await GetByIdAsync(noteId, username);
         var comments = await context.Comments.Where(x => x.NoteId == noteId).ToListAsync();
         return comments;
     }
 
-    public async Task<IEnumerable<Note>> GetGroupNotesAsync(int groupId)
+    public async Task<IEnumerable<Note>> GetGroupNotesAsync(int groupId, string username)
     {
         var subjectGroup = await context.SubjectGroups.FindAsync(groupId);
         if (subjectGroup == null) throw new Exception("Subject group doesnt' exist");
+
+        var member = await subjectGroupRepository.GetGroupMember(username, subjectGroup.Id);
+        if (member == null) throw new Exception("You are not a member");
 
         var notes = await context.Notes.Where(x => x.SubjectGroupId == groupId).ToListAsync();
 

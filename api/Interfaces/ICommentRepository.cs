@@ -7,6 +7,6 @@ namespace api.Interfaces;
 public interface ICommentRepository
 {
     public Task<Comment> CreateAsync(CreateCommentDto commentDto, string username);
-    public Task<Comment?> GetByIdAsync(int id);
-    public Task<Comment> DeleteAsync(int id);
+    public Task<Comment?> GetByIdAsync(int id, string username);
+    public Task<Comment> DeleteAsync(int id, string username);
 }

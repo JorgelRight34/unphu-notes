@@ -7,9 +7,9 @@ namespace api.Interfaces;
 public interface INoteRepository
 {
     Task<Note> CreateAsync(CreateNoteDto createNoteDto, string username);
-    Task<Note?> GetByIdAsync(int id);
-    Task<Note?> DeleteAsync(int id);
-    Task<IEnumerable<Note>> GetGroupNotesAsync(int groupId);
-    Task<List<Comment>> GetCommentsAsync(int noteId);
+    Task<Note?> GetByIdAsync(int id, string username);
+    Task<Note?> DeleteAsync(int id, string username);
+    Task<IEnumerable<Note>> GetGroupNotesAsync(int groupId, string username);
+    Task<List<Comment>> GetCommentsAsync(int noteId, string username);
     Task<int> SaveChangesAsync();
 }

@@ -9,38 +9,52 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories;
 
-public class CommentRepository(ApplicationDbContext context, UserManager<AppUser> userManager, IMapper mapper) : ICommentRepository
+public class CommentRepository(
+    ApplicationDbContext context,
+    UserManager<AppUser> userManager,
+    ISubjectGroupRepository subjectGroupRepository,
+    IMapper mapper
+) : ICommentRepository
 {
     public async Task<Comment> CreateAsync(CreateCommentDto commentDto, string username)
     {
-        var user = await userManager.FindByNameAsync(username);
-        if (user == null) throw new Exception("User not found");
-
         var note = await context.Notes.FindAsync(commentDto.NoteId);
         if (note == null) throw new Exception("Note not found");
 
+        var member = await subjectGroupRepository.GetGroupMember(username, note.SubjectGroupId);
+        if (member == null) throw new Exception("You are not a member");
+
         var comment = mapper.Map<Comment>(commentDto);
-        comment.AuthorId = user.Id;
-        Console.WriteLine($"comment: {comment.NoteId}");
-        Console.WriteLine($"comment: {comment.AuthorId}");
+        comment.AuthorId = member.StudentId;
+
         await context.Comments.AddAsync(comment);
         await context.SaveChangesAsync();
 
         return comment;
     }
 
-    public async Task<Comment> DeleteAsync(int id)
+    public async Task<Comment> DeleteAsync(int id, string username)
     {
-        var note = await GetByIdAsync(id);
-        if (note == null) throw new Exception("Comment not found");
+        var user = await userManager.FindByNameAsync(username);
+        if (user == null) throw new Exception("User not found");
 
-        context.Comments.Remove(note);
-        return note;
+        var comment = await GetByIdAsync(id, username);
+        if (comment == null) throw new Exception("Comment not found");
+
+        if (comment.AuthorId != user.Id) throw new Exception("You are not the author of this comment");
+
+        context.Comments.Remove(comment);
+        return comment;
     }
 
-    public Task<Comment?> GetByIdAsync(int id)
+    public async Task<Comment?> GetByIdAsync(int id, string username)
     {
-        var note = context.Comments.FirstOrDefaultAsync(x => x.Id == id);
-        return note;
+        var comment = await context.Comments.FirstOrDefaultAsync(x => x.Id == id);
+        if (comment == null) return null;
+
+        var member = await subjectGroupRepository.GetGroupMember(username, comment.SubjectGroupId);
+        if (member == null) throw new Exception("You are not a member");
+
+        return comment;
     }
 }

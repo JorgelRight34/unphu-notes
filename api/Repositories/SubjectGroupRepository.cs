@@ -84,8 +84,11 @@ public class SubjectGroupRepository(
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<SubjectGroup?> DeleteByIdAsync(int id)
+    public async Task<SubjectGroup?> DeleteByIdAsync(int id, string username)
     {
+        var member = await GetGroupMember(username, id);
+        if (member == null) throw new Exception("You are not a member");
+
         var subjectGroup = await context.SubjectGroups.FindAsync(id);
         if (subjectGroup == null) return null;
 
@@ -97,8 +100,11 @@ public class SubjectGroupRepository(
 
     /// <summary>Gets a subject group by id.</summary>
     /// <param name="id">Id of the subject group to get</param>
-    public async Task<SubjectGroup?> GetByIdAsync(int id)
+    public async Task<SubjectGroup?> GetByIdAsync(int id, string username)
     {
+        var member = await GetGroupMember(username, id);
+        if (member == null) throw new Exception("You are not a member");
+
         var subjectGroup = await context.SubjectGroups.FindAsync(id);
         return subjectGroup;
     }
@@ -107,6 +113,9 @@ public class SubjectGroupRepository(
     /// <param name="username">Username of the student</param>
     public async Task<SubjectGroupMember?> GetGroupMember(string username, int subjectGroupId)
     {
+        var member = await GetGroupMember(username, subjectGroupId);
+        if (member == null) throw new Exception("You are not a member");
+
         var user = await userManager.FindByNameAsync(username);
         if (user == null) throw new Exception("User not found");
 
@@ -117,8 +126,11 @@ public class SubjectGroupRepository(
         return groupMember;
     }
 
-    public async Task<List<SubjectGroupMember>> GetGroupMembers(int subjectGroupId)
+    public async Task<List<SubjectGroupMember>> GetGroupMembers(int subjectGroupId, string username)
     {
+        var member = await GetGroupMember(username, subjectGroupId);
+        if (member == null) throw new Exception("You are not a member");
+
         var members = await context.SubjectGroupMembers
             .Where(x => x.SubjectGroupId == subjectGroupId)
             .Include(x => x.Student)

@@ -22,7 +22,7 @@ public class CommentsController(ICommentRepository commentRepository, IMapper ma
     [HttpGet("{id:int}")]
     public async Task<ActionResult<CommentDto?>> GetById(int id)
     {
-        var comment = await commentRepository.GetByIdAsync(id);
+        var comment = await commentRepository.GetByIdAsync(id, User.GetUsername());
         if (comment == null) return NotFound(new { message = "Comment not found" });
 
         return Ok(mapper.Map<CommentDto>(comment));
@@ -31,10 +31,10 @@ public class CommentsController(ICommentRepository commentRepository, IMapper ma
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Delete(int id)
     {
-        var comment = await commentRepository.DeleteAsync(id);
+        var comment = await commentRepository.DeleteAsync(id, User.GetUsername());
         if (comment == null) return NotFound(new { message = "Comment not found" });    // Return not found if null
 
-        await commentRepository.DeleteAsync(id);   // Delete the comment
+        await commentRepository.DeleteAsync(id, User.GetUsername());   // Delete the comment
         return NoContent();   // Return no content
     }
 }
