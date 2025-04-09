@@ -1,15 +1,13 @@
-<div class="row mx-0 border rounded">
-  <div class="col-3">
-    <img
-      [src]="user().profilePic"
-      [alt]="user().username"
-      class="rounded-circle"
-      width="50"
-      height="50"
-    />
-  </div>
-  <div class="col-9 d-flex flex-column justify-content-center">
-    <span class="text-truncate">{{ user().username }}</span>
-    <span class="text-truncate">{{ user().email }}</span>
+<div
+  class="border rounded-3 d-flex align-items-center px-1 h-100 px-2 p-2 shadow-sm"
+>
+  <img
+    loading="lazy"
+    class="img-fluid profile-pic me-1"
+    [src]="user().profilePic"
+    [alt]="user().username"
+  /><span>{{ user().username | uppercase }}</span>
+  <div class="ms-2 d-flex align-items-center hover">
+    <span class="material-symbols-outlined me-1">logout</span>
   </div>
 </div>

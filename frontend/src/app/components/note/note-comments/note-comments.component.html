@@ -1,0 +1,23 @@
+<div class="row mx-0">
+  <!-- Note preview -->
+  <div class="col-lg-6 bg-black d-flex justify-content-center">
+    <app-note-files-gallery [note]="note()" />
+  </div>
+  <!-- Comments -->
+  <div class="col-lg-6">
+    <!-- Header -->
+    <div class="p-3 border-bottom">
+      <h5>Comentarios</h5>
+    </div>
+    <!-- Comment form -->
+    <div class="p-3">
+      <app-comment-form [note]="note()" (onSubmit)="handleOnSubmit($event)" />
+    </div>
+    <!-- Comments -->
+    <div class="d-flex flex-column gap-3 p-3">
+      @for (comment of comments() ; track comment.id) {
+      <app-comment-card [comment]="comment" />
+      }
+    </div>
+  </div>
+</div>

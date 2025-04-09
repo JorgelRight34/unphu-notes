@@ -1,0 +1,5 @@
+<button (click)="openModal()">+ Create Note</button>
+<app-modal title="+ Crear Nota" [isOpen]="showModal()">
+  <button appFileUpload (fileSelected)="handleAddNoteFile($event)">Add</button>
+  <button (click)="handleCreateNote()">Create</button>
+</app-modal>

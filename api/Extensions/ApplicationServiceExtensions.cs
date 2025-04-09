@@ -22,6 +22,7 @@ public static class ApplicationServiceExtensions
         services.AddScoped<ISubjectGroupRepository, SubjectGroupRepository>();
         services.AddScoped<INoteRepository, NoteRepository>();
         services.AddScoped<IFileUploadService, FileUploadService>();
+        services.AddScoped<ICommentRepository, CommentRepository>();
         services.AddHttpClient("UNPHU", client =>
         {
             client.BaseAddress = new Uri("https://client-api-gateway.unphusist.unphu.edu.do/");

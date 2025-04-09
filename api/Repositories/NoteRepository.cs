@@ -4,12 +4,16 @@ using api.DTOs.Note;
 using api.Interfaces;
 using api.Models;
 using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories;
 
-public class NoteRepository(ApplicationDbContext context, IFileUploadService fileUploadService, IMapper mapper, UserManager<AppUser> userManager) : INoteRepository
+public class NoteRepository(
+    ApplicationDbContext context,
+    IFileUploadService fileUploadService,
+    ISubjectGroupRepository subjectGroupRepository,
+    IMapper mapper
+) : INoteRepository
 {
     /// <summary>
     /// Creates a new note from the provided data transfer object (DTO).
@@ -20,55 +24,82 @@ public class NoteRepository(ApplicationDbContext context, IFileUploadService fil
     /// </returns>
     public async Task<Note> CreateAsync(CreateNoteDto createNoteDto, string username)
     {
-        var user = await userManager.FindByNameAsync(username);
-        if (user == null) throw new Exception("User doesn't exist");
+        var member = await subjectGroupRepository.GetGroupMember(username, createNoteDto.SubjectGroupId);
+        if (member == null) throw new Exception("You are not a member");
 
         var note = mapper.Map<Note>(createNoteDto);
-        note.StudentId = user.Id;
+        note.StudentId = member.StudentId;
 
-        if (createNoteDto.File != null) {
-            var fileResult = await fileUploadService.AddFileAsync(createNoteDto.File);
-            if (fileResult.Error != null) throw new Exception(fileResult.Error.Message);
+        var entry = await context.Notes.AddAsync(note);
+        await context.SaveChangesAsync();
 
-            note.PublicId = fileResult.PublicId;
-            note.Url = fileResult.Url.ToString();
+        Console.WriteLine($"saved note id ${entry.Entity.Id}");
+
+        if (createNoteDto.Files != null && createNoteDto.Files.Count > 0)
+        {
+            foreach (var file in createNoteDto.Files)
+            {
+                var fileUpload = await GenerateNoteFile(file, entry.Entity.Id);
+                context.NoteFiles.Add(fileUpload);
+            }
         }
 
-        await context.Notes.AddAsync(note);
         await context.SaveChangesAsync();
+
         return note;
     }
 
-    public async Task<Note?> DeleteAsync(int id)
+    public async Task<NoteFile> GenerateNoteFile(IFormFile file, int noteId)
     {
-        var note = await context.Notes.FindAsync(id);
+        var fileResult = await fileUploadService.AddFileAsync(file);
+        if (fileResult.Error != null) throw new Exception(fileResult.Error.Message);
+
+        var fileUpload = new NoteFile
+        {
+            PublicId = fileResult.PublicId,
+            Url = fileResult.Url.ToString(),
+            NoteId = noteId
+        };
+
+        return fileUpload;
+    }
+
+    public async Task<Note?> DeleteAsync(int id, string username)
+    {
+        var note = await context.Notes.Include(x => x.NoteFiles).FirstOrDefaultAsync(x => x.Id == id);
         if (note == null) return null;
+
+        var member = await subjectGroupRepository.GetGroupMember(username, note.SubjectGroupId);
+        if (member == null) throw new Exception("You are not a member");
+
+        foreach (var file in note.NoteFiles)
+        {
+            var result = await fileUploadService.DeleteFileAsync(file.PublicId);
+            if (result.Error == null) context.NoteFiles.Remove(file);
+        }
 
         context.Notes.Remove(note);
         await context.SaveChangesAsync();
 
-        if (note.PublicId != null) {
-            var deleteFileResult = await fileUploadService.DeleteFileAsync(note.PublicId);
-            if (deleteFileResult.Result != "ok") throw new Exception(deleteFileResult.Error.Message);
-        }
+        return note;
+    }
+
+    public async Task<Note?> GetByIdAsync(int id, string username)
+    {
+        var note = await context.Notes.Include(x => x.NoteFiles).FirstOrDefaultAsync(x => x.Id == id);
+        if (note == null) return null;
+
+        var member = await subjectGroupRepository.GetGroupMember(username, note.SubjectGroupId);
+        if (member == null) throw new Exception("You are not a member");
 
         return note;
     }
 
-    public async Task<Note?> GetByIdAsync(int id)
+    public async Task<List<Comment>> GetCommentsAsync(int noteId, string username)
     {
-        var note = await context.Notes.FindAsync(id);
-        return note;
-    }
-
-    public async Task<IEnumerable<Note>> GetGroupNotesAsync(int groupId)
-    {
-        var subjectGroup = await context.SubjectGroups.FindAsync(groupId);
-        if (subjectGroup == null) throw new Exception("Subject group doesnt' exist");
-
-        var notes = await context.Notes.Where(x => x.SubjectGroupId == groupId).ToListAsync();
-
-        return notes;
+        var note = await GetByIdAsync(noteId, username);
+        var comments = await context.Comments.Where(x => x.NoteId == noteId).ToListAsync();
+        return comments;
     }
 
     public async Task<int> SaveChangesAsync()

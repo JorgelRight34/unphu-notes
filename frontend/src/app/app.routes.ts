@@ -14,9 +14,9 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
-        path: 'subject/:id',
+        path: 'group/:id',
         loadComponent: () =>
-          import('./components/subject-view/subject-view.component').then(
+          import('./components/group/group-view/group-view.component').then(
             (m) => m.SubjectViewComponent
           ),
       },

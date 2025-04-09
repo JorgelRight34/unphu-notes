@@ -8,17 +8,31 @@ namespace api.Data;
 
 public class ApplicationDbContext : IdentityDbContext<AppUser>
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
-    
+
     public DbSet<SubjectGroup> SubjectGroups { get; set; }
     public DbSet<SubjectGroupMember> SubjectGroupMembers { get; set; }
     public DbSet<Note> Notes { get; set; }
+    public DbSet<Comment> Comments { get; set; }
+    public DbSet<NoteFile> NoteFiles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.Entity<Note>()
+            .HasMany(n => n.Comments)
+            .WithOne(c => c.Note)
+            .HasForeignKey(c => c.NoteId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<Note>()
+            .HasMany(n => n.NoteFiles)
+            .WithOne(f => f.Note)
+            .HasForeignKey(f => f.NoteId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         var roles = new List<IdentityRole>
         {

@@ -1,5 +1,6 @@
 using System;
 using api.Data;
+using api.DTOs.Comment;
 using api.DTOs.Note;
 using api.DTOs.SubjectGroup;
 using api.DTOs.SubjectGroupMember;
@@ -28,5 +29,10 @@ public class AutoMapperProfiles : Profile
         // Notes
         CreateMap<Note, NoteDto>();
         CreateMap<CreateNoteDto, Note>();
+        CreateMap<NoteFile, NoteFileDto>();
+
+        // Comments
+        CreateMap<Comment, CommentDto>();
+        CreateMap<CreateCommentDto, Comment>();
     }
 }

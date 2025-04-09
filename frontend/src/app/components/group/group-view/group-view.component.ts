@@ -1,17 +1,17 @@
 import { Component, signal } from '@angular/core';
-import { GroupService } from '../../services/group.service';
+import { GroupService } from '../../../services/group.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Note } from '../../models/note';
-import { GroupMember } from '../../models/groupMember';
-import { NoteCardComponent } from '../note-card/note-card.component';
+import { Note } from '../../../models/note';
+import { GroupMember } from '../../../models/groupMember';
+import { NoteCardComponent } from '../../note/note-card/note-card.component';
 import { map, of } from 'rxjs';
-import { CreateNoteButtonComponent } from '../create-note-button/create-note-button.component';
+import { CreateNoteButtonComponent } from '../../note/create-note-button/create-note-button.component';
 
 @Component({
   selector: 'app-subject-view',
   imports: [NoteCardComponent, CreateNoteButtonComponent],
-  templateUrl: './subject-view.component.html',
-  styleUrl: './subject-view.component.css',
+  templateUrl: './group-view.component.html',
+  styleUrl: './group-view.component.css',
 })
 export class SubjectViewComponent {
   week = signal<number>(1);

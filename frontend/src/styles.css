@@ -14,3 +14,7 @@
 .text-dark-green {
   color: var(--dark-green-color);
 }
+
+.hover:hover {
+  cursor: pointer;
+}
