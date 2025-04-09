@@ -32,6 +32,8 @@ export class AuthService {
 
   loadUser() {
     // Get user information (username, email, etc.)
-    return this.http.get<User>(this.baseUrl);
+    return this.http
+      .get<User>(this.baseUrl)
+      .pipe(tap((data) => this.user.set(data)));
   }
 }

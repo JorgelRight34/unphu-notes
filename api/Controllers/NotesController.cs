@@ -14,9 +14,11 @@ namespace api.Controllers;
 public class NotesController(INoteRepository noteRepository, IMapper mapper) : ApiBaseController
 {
     [HttpPost]
-    public async Task<ActionResult<NoteDto>> Create([FromBody] CreateNoteDto request)
+    public async Task<ActionResult<NoteDto>> Create([FromForm] CreateNoteDto request)
     {
-        var note = await noteRepository.CreateAsync(request, User.GetUsername());
+        var username = User.GetUsername();
+        var note = await noteRepository.CreateAsync(request, username);
+
         return Ok(mapper.Map<NoteDto>(note));
     }
 

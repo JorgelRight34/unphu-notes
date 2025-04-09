@@ -8,5 +8,7 @@ public class CreateNoteDto
     [Required]
     public int SubjectGroupId { get; set; }
     [Required]
+    public IFormFile? File { get; set; }
+    [Required]
     public DateTime DateTime { get; set; } = DateTime.Now;
 }

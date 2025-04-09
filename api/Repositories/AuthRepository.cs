@@ -70,10 +70,10 @@ public class AuthRepository(
 
         // Create user from scratch
         var user = mapper.Map<AppUser>(payload);
+        user.ProfilePic = payload.Picture;  // Set profile pic
         user.UserName = username;
         user = await CreateFullStudent(user);  // Fill all the missing information about user
 
-        Console.WriteLine("Tu estas");
         return user;
     }
 

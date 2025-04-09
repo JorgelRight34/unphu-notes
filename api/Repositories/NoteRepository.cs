@@ -9,7 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories;
 
+<<<<<<< HEAD
 public class NoteRepository(ApplicationDbContext context, IFileUploadService fileUploadService, UserManager<AppUser> userManager, IMapper mapper) : INoteRepository
+=======
+public class NoteRepository(ApplicationDbContext context, IFileUploadService fileUploadService, IMapper mapper, UserManager<AppUser> userManager) : INoteRepository
+>>>>>>> 7922e999fc581cc075ea25dc008a00fa625c4763
 {
     /// <summary>
     /// Creates a new note from the provided data transfer object (DTO).
@@ -21,10 +25,20 @@ public class NoteRepository(ApplicationDbContext context, IFileUploadService fil
     public async Task<Note> CreateAsync(CreateNoteDto createNoteDto, string username)
     {
         var user = await userManager.FindByNameAsync(username);
-        if (user == null) throw new Exception("User not found");
+        if (user == null) throw new Exception("User doesn't exist");
 
         var note = mapper.Map<Note>(createNoteDto);
         note.StudentId = user.Id;
+
+        if (createNoteDto.File != null)
+        {
+            var fileResult = await fileUploadService.AddFileAsync(createNoteDto.File);
+            if (fileResult.Error != null) throw new Exception(fileResult.Error.Message);
+
+            note.PublicId = fileResult.PublicId;
+            note.Url = fileResult.Url.ToString();
+        }
+
         await context.Notes.AddAsync(note);
         await context.SaveChangesAsync();
         return note;
@@ -38,8 +52,11 @@ public class NoteRepository(ApplicationDbContext context, IFileUploadService fil
         context.Notes.Remove(note);
         await context.SaveChangesAsync();
 
-        var deleteFileResult = await fileUploadService.DeleteFileAsync(note.PublicId!);
-        if (deleteFileResult.Result != "ok") throw new Exception(deleteFileResult.Error.Message);
+        if (note.PublicId != null)
+        {
+            var deleteFileResult = await fileUploadService.DeleteFileAsync(note.PublicId);
+            if (deleteFileResult.Result != "ok") throw new Exception(deleteFileResult.Error.Message);
+        }
 
         return note;
     }
