@@ -3,22 +3,25 @@
     <app-user-post-card [user]="note().student" [date]="note().date" />
   </div>
 
-  <app-note-files-gallery
-    [note]="note()"
-    (onIndexChange)="handleCurrentImageChange($event)"
-  />
+  <app-note-files-gallery [note]="note()" (onIndexChange)="handleCurrentImageChange($event)" />
 
   <div class="card-body d-flex justify-content-end flex-wrap gap-3 p-2">
-    <button class="btn btn-dark-green" (click)="handleDelete()">Delete</button>
-    <a [href]="noteFileUrl()" class="btn btn-dark-green"> Download </a>
-    <button class="btn btn-dark-green" (click)="handleShowModal()">
+    <button class="btn btn-dark-green d-flex align-items-center" (click)="handleDelete()">
+      <span class="material-symbols-outlined me-1">delete</span>
+      Delete
+    </button>
+    <a [href]="noteFileUrl()" class="btn btn-dark-green d-flex align-items-center">
+      <span class="material-symbols-outlined me-1">download</span>
+      Download
+    </a>
+    <button class="btn btn-dark-green d-flex align-items-center" (click)="handleShowModal()">
+      <span class="material-symbols-outlined me-1">comment</span>
       Comments
     </button>
   </div>
-</div>
 
-<app-modal title="Note" width="70dvw" [(isOpen)]="showModal">
-  @if (showModal()) {
-  <app-note-comments [note]="note()" />
-  }
-</app-modal>
+  <app-modal title="Note" width="70dvw" [(isOpen)]="showModal">
+    @if (showModal()) {
+    <app-note-comments [note]="note()" />
+    }
+  </app-modal>

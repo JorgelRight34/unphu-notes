@@ -11,19 +11,28 @@ import { GroupMember } from '../models/groupMember';
 export class GroupService {
   baseUrl = environment.apiUrl + 'groups/';
   private groups = signal<Group[]>([]);
+  private fetched = signal<boolean>(false);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getEnrolledGroups() {
     // Get current user enrolled subjects if not fetched
-    if (this.groups().length > 0) return this.groups();
+    if (this.fetched()) return this.groups();
 
     // Fetch the groups from the API and set them to the signal
     this.http.get<Group[]>(this.baseUrl).subscribe({
-      next: (data) => this.groups.set(data),
+      next: (data) => {
+        this.groups.set(data);
+        this.fetched.set(true);
+      },
     });
 
     return this.groups();
+  }
+
+  getGroup(id: number) {
+    // Get the group with the corresponding id
+    return this.http.get<Group>(this.baseUrl + `${id}`);
   }
 
   getGroupNotes(id: number) {

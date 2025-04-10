@@ -4,10 +4,11 @@ import { Note } from '../../../models/note';
 import { CommentService } from '../../../services/comment.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NoteComment } from '../../../models/noteComment';
+import { UserPostCardComponent } from '../../common/user-post-card/user-post-card.component';
 
 @Component({
   selector: 'app-comment-form',
-  imports: [FormsModule],
+  imports: [UserPostCardComponent, FormsModule],
   templateUrl: './comment-form.component.html',
   styleUrl: './comment-form.component.css',
 })
@@ -20,7 +21,7 @@ export class CommentFormComponent {
   constructor(
     private authService: AuthService,
     private commentService: CommentService
-  ) {}
+  ) { }
 
   handleSubmit(form: NgForm) {
     const noteId = this.note().id;
@@ -30,7 +31,10 @@ export class CommentFormComponent {
       this.commentService
         .createNoteComment({ content: this.model.content, noteId })
         .subscribe({
-          next: (comment) => this.onSubmit.emit(comment),
+          next: (comment) => {
+            this.onSubmit.emit(comment);
+            form.reset();
+          },
         });
     }
   }

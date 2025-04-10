@@ -1,8 +1,3 @@
-main,
-.group-list {
-  height: 93dvh !important;
-}
-
 .group-list {
   overflow-y: auto;
 }

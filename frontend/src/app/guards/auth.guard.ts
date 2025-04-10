@@ -15,7 +15,14 @@ export const authGuard: CanActivateFn = (route, state) => {
       const now = Date.now() / 1000;
 
       if (exp && exp > now) {
-        if (!authService.user()) authService.loadUser().subscribe();
+        if (!authService.user()) authService.loadUser().subscribe({
+          next: (user) => {
+            if (!user) router.navigate(['login']);
+          },
+          error: () => {
+            router.navigate(['login']);
+          },
+        });
         return true;
       }
     }
