@@ -1,11 +1,11 @@
 <div class="p-0 d-flex align-items-center">
   <div>
-    <img loading="lazy" class="img-fluid profile-pic me-2" [src]="user()?.profilePic"
-      [alt]="user()?.username" /><span>{{ user()?.fullName | titlecase }}</span>
+    <img loading="lazy" class="img-fluid profile-pic me-2" [src]="user()?.profilePic" [alt]="user()?.username" /><span
+      class="text-truncate">{{ user()?.fullName?.split(' ')?.[0] | titlecase }}</span>
   </div>
   @if (date()) {
-  <div class="ms-auto mb-0">
-    <span class="text-muted">{{ date() | date : "medium" }}</span>
+  <div class="ms-auto d-flex justify-content-end mb-0">
+    <span class="text-truncate text-muted">{{ date() | date : "short" }}</span>
   </div>
   }
 </div>

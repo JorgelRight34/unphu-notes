@@ -21,7 +21,7 @@ export class CommentFormComponent {
   constructor(
     private authService: AuthService,
     private commentService: CommentService
-  ) { }
+  ) {}
 
   handleSubmit(form: NgForm) {
     const noteId = this.note().id;

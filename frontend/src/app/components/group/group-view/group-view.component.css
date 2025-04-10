@@ -3,16 +3,23 @@
 }
 
 .note-list {
-  height: 87dvh;
+  height: 85dvh;
   overflow-y: auto;
 }
 
 app-create-note-button {
-  position: absolute;
+  position: fixed;
+  width: 10rem;
   right: 0;
-  bottom: 0;
+  bottom: 1.5rem;
 }
 
 .weeks {
   width: auto;
+}
+
+@media (max-width: 500px) {
+  app-create-note-button {
+    display: none;
+  }
 }

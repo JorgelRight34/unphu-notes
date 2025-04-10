@@ -10,6 +10,8 @@ import { GroupMember } from '../models/groupMember';
 })
 export class GroupService {
   baseUrl = environment.apiUrl + 'groups/';
+  currentGroup = signal<Group | undefined>(undefined);
+  currentWeek = signal(1);
   private groups = signal<Group[]>([]);
   private fetched = signal<boolean>(false);
 
@@ -23,6 +25,7 @@ export class GroupService {
     this.http.get<Group[]>(this.baseUrl).subscribe({
       next: (data) => {
         this.groups.set(data);
+        this.currentGroup.set(data[0]);
         this.fetched.set(true);
       },
     });
@@ -42,5 +45,20 @@ export class GroupService {
 
   getGroupMembers(id: number) {
     return this.http.get<GroupMember[]>(this.baseUrl + `${id}/members`);
+  }
+
+  selectGroup(id: number) {
+    this.currentWeek.set(1);
+    this.currentGroup.set(this.groups().find((g) => g.id === id));
+  }
+
+  selectDefaultGroup() {
+    // Select the first group in the list of groups
+    const group = this.groups()[0];
+    if (group) {
+      this.currentGroup.set(group);
+      return group;
+    }
+    return undefined;
   }
 }

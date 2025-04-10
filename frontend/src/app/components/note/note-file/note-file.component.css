@@ -1,6 +1,6 @@
 .file {
   height: 25dvh;
-  width: 23dvw;
+  width: 27dvw;
 }
 
 img {
@@ -10,4 +10,15 @@ img {
 
 .icon {
   font-size: 5rem;
+}
+
+@media (max-width: 500px) {
+  .file {
+    width: 100%;
+    height: auto;
+  }
+
+  img {
+    height: 20dvh;
+  }
 }

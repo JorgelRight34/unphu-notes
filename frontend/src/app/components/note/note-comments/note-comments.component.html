@@ -2,7 +2,7 @@
   <!-- Note preview -->
   <div class="col-lg-6 d-flex align-items-center justify-content-center">
     <div>
-      <app-note-files-gallery id="gallery-comments" [note]="note()" />
+      <app-note-files-gallery minWidth="33dvw" id="gallery-comments" [note]="note()" />
     </div>
   </div>
   <!-- Comments -->
@@ -13,11 +13,11 @@
     </div>
     <div class="comments">
       <!-- Comment form -->
-      <div class="p-3">
+      <div class="p-lg-3 mb-3 mb-lg-0">
         <app-comment-form [note]="note()" (onSubmit)="handleOnSubmit($event)" />
       </div>
       <!-- Comments -->
-      <div class="d-flex flex-column gap-3 p-3">
+      <div class="d-flex flex-column gap-3 p-lg-3">
         @for (comment of comments() ; track comment.id) {
         <app-comment-card [comment]="comment" />
         }

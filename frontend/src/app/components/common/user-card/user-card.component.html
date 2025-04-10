@@ -1,13 +1,7 @@
-<div
-  class="border rounded-3 d-flex align-items-center px-1 h-100 px-2 p-2 shadow-sm"
->
-  <img
-    loading="lazy"
-    class="img-fluid profile-pic me-2"
-    [src]="user().profilePic"
-    [alt]="user().username"
-  /><span>{{ fullName() | titlecase }}</span>
+<div class="border rounded-3 d-flex align-items-center px-1 h-100 px-2 p-2 shadow-sm">
+  <img loading="lazy" class="img-fluid profile-pic me-2" [src]="user().profilePic" [alt]="user().username" /><span>{{
+    fullName() | titlecase }}</span>
   <div class="ms-2 d-flex align-items-center hover">
-    <span class="material-symbols-outlined me-1">logout</span>
+    <span class="material-symbols-outlined me-1" routerLink="/logout">logout</span>
   </div>
 </div>

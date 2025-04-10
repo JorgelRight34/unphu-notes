@@ -9,4 +9,12 @@ img {
 
 .note {
   width: 33dvw;
+  animation: fadeIn;
+  animation-duration: 1s;
+}
+
+@media (max-width: 500px) {
+  .note {
+    width: 90dvw;
+  }
 }

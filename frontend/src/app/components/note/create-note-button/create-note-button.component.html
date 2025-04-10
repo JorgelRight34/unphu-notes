@@ -1,18 +1,14 @@
 <!-- Create button -->
-<button class="btn btn-dark-blue" (click)="openModal()">+ Crear Nota</button>
+<div class="d-flex align-items-center p-0 m-0" (click)="openModal()">
+  <ng-content select="[create-button]">
+    <button class="btn btn-dark-blue">+ Crear Nota</button>
+  </ng-content>
+</div>
 
 <!-- Add files -->
-<app-modal
-  title="+ Crear Nota | Semana {{ week() }}"
-  [(isOpen)]="showModal"
-  width="75dvw"
->
+<app-modal title="+ Crear Nota | Semana {{ week() }}" [(isOpen)]="showModal" width="60dvw">
   <div class="p-3 border-bottom pb-3 mb-3">
-    <button
-      class="btn btn-dark-blue px-5"
-      appFileUpload
-      (fileSelected)="handleAddNoteFile($event)"
-    >
+    <button class="btn btn-dark-blue px-5" appFileUpload (fileSelected)="handleAddNoteFile($event)">
       + Añadir
     </button>
   </div>
@@ -25,11 +21,7 @@
     </div>
   </div>
   <div class="p-3 d-flex justify-content-end">
-    <button
-      [disabled]="files().length === 0"
-      class="btn btn-dark-green px-lg-5"
-      (click)="handleCreateNote()"
-    >
+    <button [disabled]="files().length === 0" class="btn btn-dark-green px-lg-5" (click)="handleCreateNote()">
       Crear
     </button>
   </div>

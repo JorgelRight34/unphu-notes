@@ -1,0 +1,26 @@
+<div class="nav-container d-block d-lg-none p-0 border-top border-top">
+  <nav class="nav bg-white border-bottom row px-3 p-2 mx-0">
+    <!-- Navbar for small screens -->
+    <div class="row d-flex flex-wrap gap-4 align-items-center justify-content-center d-md-none w-100">
+      <span class="material-symbols-outlined fs-1" [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]=" { exact: true }" routerLink="/">
+        home
+      </span>
+      <span class="material-symbols-outlined fs-1" [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]=" { exact: true }" [routerLink]="`/group/${currentGroup()?.id}`">
+        description
+      </span>
+      <span class="d-flex align-items-center">
+        <app-create-note-button [groupId]="currentGroup()?.id || 0" [week]="week()">
+          <span create-button class="material-symbols-outlined fs-1 m-0">
+            add_circle_outline
+          </span>
+        </app-create-note-button>
+      </span>
+      <span class="material-symbols-outlined fs-1" [routerLinkActive]="'active'" routerLink="/logout">
+        logout
+      </span>
+
+    </div>
+  </nav>
+</div>

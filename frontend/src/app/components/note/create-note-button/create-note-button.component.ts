@@ -5,6 +5,7 @@ import { FileUploadDirective } from '../../../directives/file-upload.directive';
 import { Note } from '../../../models/note';
 import { ModalComponent } from '../../common/modal/modal.component';
 import { NoteFileComponent } from '../note-file/note-file.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-note-button',
@@ -21,10 +22,13 @@ export class CreateNoteButtonComponent {
 
   constructor(
     private noteService: NoteService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   handleAddNoteFile(file: File) {
+    if (this.groupId() === 0) return;
+
     this.files.update((prev) => [...prev, file]);
   }
 
@@ -44,13 +48,13 @@ export class CreateNoteButtonComponent {
   }
 
   handleOnDelete(file: File) {
-    console.log('deleting');
     this.files.update((prev) => [
       ...prev.filter((f) => !this.areFilesEqual(f, file)),
     ]);
   }
 
   openModal() {
+    if (this.groupId() === 0 || !this.router.url.includes('/group')) return;
     this.showModal.set(true);
   }
 

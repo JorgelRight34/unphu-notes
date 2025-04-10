@@ -1,27 +1,35 @@
-<div class="note rounded border">
+<!-- Note card -->
+<div class="note bg-white rounded border position-relative">
+  <!-- Header -->
   <div class="p-2 d-flex align-items-center border-bottom">
     <app-user-post-card [user]="note().student" [date]="note().date" />
   </div>
-
+  <!-- Image gallery -->
   <app-note-files-gallery [note]="note()" (onIndexChange)="handleCurrentImageChange($event)" />
-
+  <!-- Option buttons-->
   <div class="card-body d-flex justify-content-end flex-wrap gap-3 p-2">
+    <!-- Delete -->
     <button class="btn btn-dark-green d-flex align-items-center" (click)="handleDelete()">
-      <span class="material-symbols-outlined me-1">delete</span>
-      Delete
+      <span class="material-symbols-outlined me-0 me-lg-1">delete</span>
+      <span class="d-none d-lg-block">Borrar</span>
     </button>
+    <!-- Download -->
     <a [href]="noteFileUrl()" class="btn btn-dark-green d-flex align-items-center">
-      <span class="material-symbols-outlined me-1">download</span>
-      Download
+      <span class="material-symbols-outlined me-0 me-lg-1">download</span>
+      <span class="d-none d-lg-block">Descargar</span>
     </a>
+    <!-- Comments -->
     <button class="btn btn-dark-green d-flex align-items-center" (click)="handleShowModal()">
-      <span class="material-symbols-outlined me-1">comment</span>
-      Comments
+      <span class="material-symbols-outlined me-0 me-lg-1">comment</span>
+      <span class="d-none d-lg-block">Comentarios</span>
     </button>
   </div>
+</div>
 
-  <app-modal title="Note" width="70dvw" [(isOpen)]="showModal">
-    @if (showModal()) {
-    <app-note-comments [note]="note()" />
-    }
-  </app-modal>
+<!-- Comments modal -->
+<app-modal width="70dvw" [(isOpen)]="showModal">
+  <app-user-post-card header [user]="note().student" [date]="note().date" />
+  @if (showModal()) {
+  <app-note-comments [note]="note()" />
+  }
+</app-modal>

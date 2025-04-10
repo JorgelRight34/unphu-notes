@@ -1,5 +1,5 @@
 <!-- File card -->
-<div class="file row mx-0 border rounded-3 p-3">
+<div class="file row mx-0 border rounded-3 p-3 shadow-sm">
   <div class="col-lg-4 d-flex align-items-center justify-content-center">
     @if (file().type.startsWith("image")) {
     <span class="icon material-symbols-outlined"> image </span>
@@ -9,10 +9,12 @@
   </div>
   <div class="col-lg-8">
     <ul class="list-unstyled">
-      <li class="mb-3"><b>Nombre</b>: {{ file().name }}</li>
-      <li class="mb-3"><b>Size</b>: {{ file().size }}</li>
+      <li class="mb-3 text-truncate"><b>Nombre</b>: {{ file().name }}</li>
+      <li class="mb-3"><b>Size</b>: {{ file().size | number }} bytes</li>
       <li><b>Tipo</b>: {{ file().type }}</li>
     </ul>
-    <button (click)="handleDelete()">Quitar</button>
+    <button class="btn btn-dark-blue w-100" (click)="handleDelete()">
+      Quitar
+    </button>
   </div>
 </div>

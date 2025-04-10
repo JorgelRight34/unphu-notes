@@ -13,5 +13,12 @@
 
 .custom-modal {
   max-height: 95dvh;
+  overflow-y: auto;
   z-index: 1000;
+}
+
+@media (max-width: 500px) {
+  .custom-modal {
+    width: 95dvw !important;
+  }
 }

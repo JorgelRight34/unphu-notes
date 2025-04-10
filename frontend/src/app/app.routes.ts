@@ -22,10 +22,12 @@ export const routes: Routes = [
       },
     ],
   },
-  /* temporary fix
+  {
+    path: 'logout',
+    loadComponent: () => import('./pages/logout/logout.component').then((m) => m.LogoutComponent),
+  },
   {
     path: '**',
     redirectTo: '/',
   },
-  */
 ];

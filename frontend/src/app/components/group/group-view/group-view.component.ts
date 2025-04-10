@@ -15,7 +15,7 @@ import { Group } from '../../../models/group';
   styleUrl: './group-view.component.css',
 })
 export class SubjectViewComponent {
-  week = signal<number>(1);
+  week = computed(() => this.groupService.currentWeek());
   weekNotes = computed<Note[]>(() => this.notes().filter(note => note.week === this.week()));
   notes = signal<Note[]>([]);
   members = signal<GroupMember[]>([]);
@@ -62,7 +62,8 @@ export class SubjectViewComponent {
 
   changeWeekBy(n: number) {
     if (this.week() + n < 1) return;
-    this.week.update((prev) => prev + n);
+    this.groupService.currentWeek.update((prev) => prev + n);
+
   }
 
   handleAddNote(note: Note) {
@@ -71,5 +72,9 @@ export class SubjectViewComponent {
 
   handleOnDelete(note: Note) {
     this.notes.update((prev) => [...prev.filter((n) => n.id != note.id)]);
+  }
+
+  getMembersNamesListAsString(): string {
+    return this.members().map((member) => member.student.fullName.split(' ')[0]).join(', ');
   }
 }

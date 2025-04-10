@@ -1,0 +1,21 @@
+.active {
+  color: var(--dark-green-color);
+}
+
+@media (max-width: 500px) {
+  .nav-container {
+    position: fixed;
+    bottom: 0;
+    width: 100dvw;
+    z-index: 99;
+  }
+
+  .nav-container .row {
+    width: 100dvw;
+  }
+
+  span {
+    size: 10rem !important;
+    width: 2rem;
+  }
+}

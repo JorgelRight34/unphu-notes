@@ -17,3 +17,8 @@
   background-color: rgba(96, 180, 93, 0.8);
   color: #fff;
 }
+
+.card {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+}
