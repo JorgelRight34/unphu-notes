@@ -1,11 +1,7 @@
 <div class="p-0 d-flex align-items-center">
   <div>
-    <img
-      loading="lazy"
-      class="img-fluid profile-pic me-2"
-      [src]="user().profilePic"
-      [alt]="user().username"
-    /><span>{{ user().fullName | titlecase }}</span>
+    <img loading="lazy" class="img-fluid profile-pic me-2" [src]="user()?.profilePic"
+      [alt]="user()?.username" /><span>{{ user()?.fullName | titlecase }}</span>
   </div>
   @if (date()) {
   <div class="ms-auto mb-0">

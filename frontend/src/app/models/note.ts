@@ -10,4 +10,5 @@ export interface Note {
   date: string;
   student: User;
   subjectGroup: Group;
+  week: number;
 }

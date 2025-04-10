@@ -9,6 +9,6 @@ import { User } from '../../../models/user';
   styleUrl: './user-post-card.component.css',
 })
 export class UserPostCardComponent {
-  user = input.required<User>();
+  user = input.required<User | null>();
   date = input<Date | null | string>(null);
 }

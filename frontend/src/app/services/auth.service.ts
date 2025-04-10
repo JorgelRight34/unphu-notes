@@ -11,11 +11,10 @@ export class AuthService {
   baseUrl = environment.apiUrl + 'auth/';
   user = signal<User | null>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   login(token: string) {
     // Log user in, save the token and set the user.
-    console.log(token);
     return this.http.post<User>(this.baseUrl + `login`, { token }).pipe(
       tap((data) => {
         this.user.set(data); // Set user

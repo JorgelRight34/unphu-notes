@@ -16,6 +16,8 @@ public class NoteDto
     public string? StudentId { get; set; }
     [Url]
     public string? Url { get; set; }
+    [Required]
+    public int Week { get; set; }
     public DateTime Date { get; set; }
 
     public UserDto? Student { get; set; }

@@ -17,6 +17,7 @@ import { NoteFile } from '../../../models/noteFile';
 })
 export class NoteFilesGalleryComponent {
   note = input.required<Note>();
+  id = input("gallery");
   extension = '';
   onIndexChange = output<NoteFile>();
   images = computed<GalleryItem[]>(() => {

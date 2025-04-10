@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { GroupService } from '../../../services/group.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Note } from '../../../models/note';
@@ -6,6 +6,7 @@ import { GroupMember } from '../../../models/groupMember';
 import { NoteCardComponent } from '../../note/note-card/note-card.component';
 import { map, of } from 'rxjs';
 import { CreateNoteButtonComponent } from '../../note/create-note-button/create-note-button.component';
+import { Group } from '../../../models/group';
 
 @Component({
   selector: 'app-subject-view',
@@ -15,15 +16,17 @@ import { CreateNoteButtonComponent } from '../../note/create-note-button/create-
 })
 export class SubjectViewComponent {
   week = signal<number>(1);
+  weekNotes = computed<Note[]>(() => this.notes().filter(note => note.week === this.week()));
   notes = signal<Note[]>([]);
   members = signal<GroupMember[]>([]);
+  group = signal<Group | null>(null);
   groupId = signal<number | null>(null);
 
   constructor(
     private groupService: GroupService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.params
@@ -38,26 +41,18 @@ export class SubjectViewComponent {
 
           this.groupId.set(groupId);
 
-          this.groupService
-            .getGroupMembers(groupId)
-            .pipe(
-              map((data) => {
-                this.members.set(data);
-                return data;
-              })
-            )
-            .subscribe();
+          this.groupService.getGroupMembers(groupId).subscribe({
+            next: (data) => this.members.set(data),
+          });
 
           // Return combined observables
-          this.groupService
-            .getGroupNotes(groupId)
-            .pipe(
-              map((notes) => {
-                this.notes.set(notes);
-                return notes;
-              })
-            )
-            .subscribe();
+          this.groupService.getGroupNotes(groupId).subscribe({
+            next: (data) => this.notes.set(data),
+          });
+
+          this.groupService.getGroup(groupId).subscribe({
+            next: (data) => this.group.set(data)
+          });
 
           return params;
         })

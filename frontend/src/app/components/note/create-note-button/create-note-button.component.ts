@@ -22,7 +22,7 @@ export class CreateNoteButtonComponent {
   constructor(
     private noteService: NoteService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   handleAddNoteFile(file: File) {
     this.files.update((prev) => [...prev, file]);
@@ -37,6 +37,8 @@ export class CreateNoteButtonComponent {
         next: (note) => {
           this.toastr.success('Note created');
           this.onSubmit.emit(note);
+          this.files.set([]);
+          this.showModal.set(false);
         },
       });
   }
