@@ -1,38 +1,37 @@
 <div class="row position-relative mx-0">
   <!-- Header -->
-  <div class="mx-auto d-block d-lg-flex align-items-center p-3 rounded">
+  <div class="align-items-center p-3 rounded">
     <!-- Group's subject's name -->
-    <div class="d-none d-lg-block">
-      <h5 class="text-truncate mb-3 mb-lg-2">{{ group()?.name }}</h5>
-      <span class="text-muted">{{ getMembersNamesListAsString() }}</span>
-    </div>
-    <!-- Week selector -->
-    <div class="d-flex align-items-center justify-content-center ms-auto">
-      <span class="arrow material-symbols-outlined" (click)="changeWeekBy(-1)">
-        arrow_back
-      </span>
-      <h5 class="text-muted mb-0 mx-3">Semana {{ week() }}</h5>
-      <span class="arrow material-symbols-outlined" (click)="changeWeekBy(1)">
-        arrow_forward
+    <div class="d-flex mb-0">
+      <h5 class="text-truncate mb-0 me-auto">{{ group()?.name }}</h5>
+      <!-- Create note button -->
+      <span class="ms-auto">
+        <app-create-note-button [week]="week()" (onSubmit)="handleAddNote($event)" [groupId]="groupId() || 0" />
       </span>
     </div>
+    <span class="text-muted">{{ getMembersNamesListAsString() }}</span>
   </div>
 
   <!-- Notes -->
   <div class="d-flex flex-column p-0 p-lg-3 note-list">
-    @defer {
     @for (note of weekNotes(); track note.id) {
     <div class="mx-auto mb-3 shadow-sm">
       <app-note-card [note]="note" (onDelete)="handleOnDelete($event)" />
     </div>
-    }
-    }
-    @loading (after 100ms; minimum 1s) {
+    } @empty {
+    @if (!loading()) {
     <h1>No hay notas</h1>
     }
+    }
   </div>
-
-  <!-- Create note button -->
-  <app-create-note-button [week]="week()" class="app-create-btn" (onSubmit)="handleAddNote($event)"
-    [groupId]="groupId() || 0" />
+  <!-- Week selector -->
+  <div id="week-selector" class="d-flex align-items-center justify-content-center ms-auto">
+    <span class="arrow material-symbols-outlined" (click)="changeWeekBy(-1)">
+      arrow_back
+    </span>
+    <h5 class="text-muted mb-0 mx-3">Semana {{ week() }}</h5>
+    <span class="arrow material-symbols-outlined" (click)="changeWeekBy(1)">
+      arrow_forward
+    </span>
+  </div>
 </div>

@@ -21,6 +21,7 @@ export class SubjectViewComponent {
   members = signal<GroupMember[]>([]);
   group = signal<Group | null>(null);
   groupId = signal<number | null>(null);
+  loading = signal(true);
 
   constructor(
     private groupService: GroupService,
@@ -57,7 +58,9 @@ export class SubjectViewComponent {
           return params;
         })
       )
-      .subscribe();
+      .subscribe({
+        next: () => this.loading.set(false)
+      });
   }
 
   changeWeekBy(n: number) {
