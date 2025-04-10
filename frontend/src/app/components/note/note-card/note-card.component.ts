@@ -1,4 +1,4 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { Note } from '../../../models/note';
 import { NoteService } from '../../../services/note.service';
 import { ModalComponent } from '../../common/modal/modal.component';
@@ -42,7 +42,7 @@ export class NoteCardComponent {
   }
 
   handleShowModal() {
-    this.showModal.set(true);
+    queueMicrotask(() => this.showModal.set(true));
   }
 
   handleCurrentImageChange(noteFile: NoteFile) {

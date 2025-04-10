@@ -21,10 +21,16 @@
     <div class="mx-auto mb-3 shadow-sm">
       <app-note-card [note]="note" (onDelete)="handleOnDelete($event)" />
     </div>
+    } @empty {
+    <h1>No hay notas</h1>
     }
   </div>
 
   <!-- Create note button -->
-  <app-create-note-button [week]="week()" class="app-create-btn" (onSubmit)="handleAddNote($event)"
-    [groupId]="groupId() || 0" />
+  <app-create-note-button
+    [week]="week()"
+    class="app-create-btn"
+    (onSubmit)="handleAddNote($event)"
+    [groupId]="groupId() || 0"
+  />
 </div>

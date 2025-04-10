@@ -1,7 +1,10 @@
-<div class="bg-white p-3">
-  <div class="d-flex flex-column flex-wrap flex-nowrap gap-3 px-3 groups" [style.max-height]="maxHeight()">
+<div class="bg-white px-0 p-md-3">
+  <div
+    class="d-flex flex-column flex-wrap flex-nowrap gap-3 px-3 groups"
+    [style.max-height]="maxHeight()"
+  >
     @for (group of groups(); track group.id) {
-    <app-group-card [group]="group" />
+    <app-group-card (clickGroup)="handleSelectGroup($event)" [group]="group" />
     }
   </div>
 </div>

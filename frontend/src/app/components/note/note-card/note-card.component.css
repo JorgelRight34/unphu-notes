@@ -9,4 +9,6 @@ img {
 
 .note {
   width: 33dvw;
+  animation: fadeIn;
+  animation-duration: 1s;
 }

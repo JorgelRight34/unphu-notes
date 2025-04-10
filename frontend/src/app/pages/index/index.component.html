@@ -1,11 +1,24 @@
-<main class="row bg-light mx-0">
+<main class="row bg-light mx-0 position-relative">
   <!-- Subjects -->
-  <div class="col-lg-4 bg-white">
+  <div
+    class="col-lg-4 bg-white"
+    [class.d-none]="isActiveRoute()"
+    [class.d-lg-block]="true"
+  >
     <app-navbar />
+    <div class="d-block p-3 border-bottom d-md-none mb-3">
+      <h4 routerLink="/" class="text-dark-green mb-0">UNPHU Notes</h4>
+    </div>
     <app-group-list maxHeight="87dvh" />
   </div>
   <!-- Notes -->
-  <div class="col-lg-8 bg-light">
+  <div
+    class="col-lg-8 bg-light"
+    [class.d-none]="!isActiveRoute()"
+    [class.d-md-block]="true"
+  >
     <router-outlet></router-outlet>
   </div>
+  <!-- Bottom navbar -->
+  <app-navbar-sm />
 </main>

@@ -1,9 +1,9 @@
+import { DecimalPipe } from '@angular/common';
 import { Component, computed, input, output } from '@angular/core';
-import { GalleryModule } from 'ng-gallery';
 
 @Component({
   selector: 'app-note-file',
-  imports: [GalleryModule],
+  imports: [DecimalPipe],
   templateUrl: './note-file.component.html',
   styleUrl: './note-file.component.css',
 })
