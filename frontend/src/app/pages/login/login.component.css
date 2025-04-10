@@ -1,0 +1,213 @@
+/* login.component.css */
+
+/* Tipografía base */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f6fa;
+    color: #2f3640;
+  }
+  
+  /* Encabezado */
+  .header-area {
+    background-color: #1f2d3d;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+  }
+  
+  .header-area .main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .header-area .logo img {
+    max-height: 50px;
+  }
+  
+  .header-area .nav {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .header-area .nav li a {
+    color: #ffffff;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .header-area .nav li a:hover {
+    color: #74b9ff;
+  }
+  
+  .menu-trigger {
+    display: none;
+  }
+  
+  /* Encabezado principal */
+  .page-heading {
+    padding: 160px 0 60px;
+    text-align: center;
+    background-color: #3e8ed0;
+    color: white;
+  }
+  
+  .page-heading .header-text h2 {
+    font-size: 36px;
+    font-weight: 700;
+  }
+  
+  .div-dec {
+    width: 100px;
+    height: 4px;
+    margin: 20px auto 0;
+    background-color: #74b9ff;
+    border-radius: 2px;
+  }
+  
+  /* Sección de login */
+  .main-services {
+    padding: 80px 0;
+    background-color: #ffffff;
+  }
+  
+  .service-item {
+    background-color: transparent;
+    border-radius: 12px;
+    box-shadow: none;
+    padding: 30px;
+  }
+  
+  .left-image img {
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .right-text-content {
+    padding: 20px;
+  }
+  
+  .right-text-content h4 {
+    font-size: 28px;
+    color: #1f2d3d;
+    margin-bottom: 20px;
+  }
+  
+  .right-text-content p {
+    margin-bottom: 20px;
+  }
+  
+  .buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background-color: #3e8ed0;
+    color: #ffffff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #2d6fa6;
+  }
+  
+  .btn-secondary {
+    background-color: #dcdde1;
+    color: #2f3640;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #b2bec3;
+  }
+  
+  /* Sección CTA */
+  .simple-cta {
+    background-color: #1f2d3d;
+    color: white;
+    padding: 60px 0;
+  }
+  
+  .simple-cta h4 em {
+    color: #74b9ff;
+    font-style: normal;
+  }
+  
+  .simple-cta h4 strong {
+    color: #ffffff;
+  }
+  
+  .simple-cta .buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+  
+  .green-button a,
+  .orange-button a {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .green-button a {
+    background-color: #3e8ed0;
+    color: white;
+  }
+  
+  .green-button a:hover {
+    background-color: #2d6fa6;
+  }
+  
+  .orange-button a {
+    background-color: #dcdde1;
+    color: #2f3640;
+  }
+  
+  .orange-button a:hover {
+    background-color: #b2bec3;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #1f2d3d;
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .header-area .nav {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .simple-cta .buttons {
+      justify-content: center;
+    }
+  
+    .buttons {
+      justify-content: center;
+    }
+  }
+  
