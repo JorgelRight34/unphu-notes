@@ -13,5 +13,4 @@ public class SubjectGroupMemberDto
     [Required]
     public int SubjectGroupId { get; set;}
     public UserDto? Student { get; set; }
-    public SubjectGroupDto? SubjectGroup { get; set; }
 }

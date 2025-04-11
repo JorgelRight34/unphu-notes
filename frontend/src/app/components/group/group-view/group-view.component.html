@@ -13,7 +13,7 @@
         />
       </span>
     </div>
-    <app-member-list [members]="members()" />
+    <app-member-list [members]="group()?.members || []" />
   </div>
 
   <!-- Notes -->
@@ -23,7 +23,7 @@
       <app-note-card [note]="note" (onDelete)="handleOnDelete($event)" />
     </div>
     } @empty { @if (!loading()) {
-    <h1>No hay notas</h1>
+    <h6 class="ps-3">No hay notas</h6>
     } }
   </div>
   <!-- Week selector -->

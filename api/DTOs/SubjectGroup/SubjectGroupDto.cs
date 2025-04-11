@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using api.DTOs.Note;
+using api.DTOs.SubjectGroupMember;
 using api.DTOs.User;
 
 namespace api.DTOs.SubjectGroup;
@@ -18,4 +19,6 @@ public class SubjectGroupDto
     [Required]
     public string? ScheduleText { get; set; }
     public string? TeacherId { get; set; }
+    public List<SubjectGroupMemberDto> Members { get; set; } = new List<SubjectGroupMemberDto>();
+    public List<NoteDto> Notes { get; set; } = new List<NoteDto>();
 }

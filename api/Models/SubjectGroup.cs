@@ -21,4 +21,6 @@ public class SubjectGroup
     // Navigation properties
     [ForeignKey("TeacherId")]
     public AppUser? Teacher { get; set; }
+    public List<SubjectGroupMember> Members { get; set; } = new List<SubjectGroupMember>();
+    public List<Note> Notes { get; set; } = new List<Note>();
 }

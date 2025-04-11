@@ -34,6 +34,12 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>
             .HasForeignKey(f => f.NoteId)
             .OnDelete(DeleteBehavior.NoAction);
 
+        builder.Entity<SubjectGroup>()
+            .HasMany(s => s.Members)
+            .WithOne(m => m.SubjectGroup)
+            .HasForeignKey(m => m.SubjectGroupId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         var roles = new List<IdentityRole>
         {
             new IdentityRole { Id ="Admin", Name="Admin", NormalizedName="ADMIN"},

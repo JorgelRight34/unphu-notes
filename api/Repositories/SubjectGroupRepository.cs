@@ -105,7 +105,11 @@ public class SubjectGroupRepository(
         var member = await GetGroupMember(username, id);
         if (member == null) throw new Exception("You are not a member");
 
-        var subjectGroup = await context.SubjectGroups.FindAsync(id);
+        var subjectGroup = await context.SubjectGroups
+            .Include(x => x.Members)
+            .Include(x => x.Notes)
+            .ThenInclude(x => x.NoteFiles)
+            .FirstOrDefaultAsync(x => x.Id == id);
         return subjectGroup;
     }
 

@@ -12,10 +12,11 @@
   </div>
   <!-- Files -->
   <div class="p-3 border-bottom">
-    <div class="d-lg-flex align-items-center">
+    <div class="d-lg-flex align-items-center mb-3">
       <h6 class="mb-2 mb-lg-0">Archivos ({{ files().length }})</h6>
       <button
         class="btn btn-dark-blue px-5 ms-auto add-file"
+        type="button"
         appFileUpload
         (fileSelected)="handleAddNoteFile($event)"
       >

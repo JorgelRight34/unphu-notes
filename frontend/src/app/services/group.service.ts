@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { Group } from '../models/group';
 import { Note } from '../models/note';
 import { GroupMember } from '../models/groupMember';
+import { finalize, map, single, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +14,10 @@ export class GroupService {
   currentGroup = signal<Group | undefined>(undefined);
   currentWeek = signal(1);
   private groups = signal<Group[]>([]);
+  private cacheGroups: Record<number, Group> = {};
   private fetched = signal<boolean>(false);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getEnrolledGroups() {
     // Get current user enrolled subjects if not fetched
@@ -35,7 +37,18 @@ export class GroupService {
 
   getGroup(id: number) {
     // Get the group with the corresponding id
-    return this.http.get<Group>(this.baseUrl + `${id}`);
+    return this.http.get<Group>(this.baseUrl + `${id}`).pipe(
+      map((data) => {
+        this.groups.update((prev) =>
+          prev.map((group) => {
+            if (group.id !== data.id) return group;
+            return data;
+          })
+        );
+        this.cacheGroups[id] = data;
+        return data;
+      })
+    );
   }
 
   getGroupNotes(id: number) {

@@ -17,11 +17,9 @@ import { MemberListComponent } from '../member-list/member-list.component';
 })
 export class SubjectViewComponent {
   week = computed(() => this.groupService.currentWeek());
-  weekNotes = computed<Note[]>(() =>
-    this.notes().filter((note) => note.week === this.week())
+  weekNotes = computed<Note[]>(
+    () => this.group()?.notes.filter((note) => note.week === this.week()) || []
   );
-  notes = signal<Note[]>([]);
-  members = signal<GroupMember[]>([]);
   group = signal<Group | null>(null);
   groupId = signal<number | null>(null);
   loading = signal(true);
@@ -45,25 +43,16 @@ export class SubjectViewComponent {
 
           this.groupId.set(groupId);
 
-          this.groupService.getGroupMembers(groupId).subscribe({
-            next: (data) => this.members.set(data),
-          });
-
-          // Return combined observables
-          this.groupService.getGroupNotes(groupId).subscribe({
-            next: (data) => this.notes.set(data),
-          });
-
           this.groupService.getGroup(groupId).subscribe({
-            next: (data) => this.group.set(data),
+            next: (data) => {
+              this.group.set(data);
+            },
           });
 
           return params;
         })
       )
-      .subscribe({
-        next: () => this.loading.set(false),
-      });
+      .subscribe();
   }
 
   changeWeekBy(n: number) {
@@ -72,10 +61,16 @@ export class SubjectViewComponent {
   }
 
   handleAddNote(note: Note) {
-    this.notes.update((prev) => [...prev, note]);
+    const g = this.group();
+    if (g) this.group.update(() => ({ ...g, notes: [...g.notes, note] }));
   }
 
   handleOnDelete(note: Note) {
-    this.notes.update((prev) => [...prev.filter((n) => n.id != note.id)]);
+    const g = this.group();
+    if (g)
+      this.group.update(() => ({
+        ...g,
+        notes: [...g.notes.filter((n) => n.id != note.id)],
+      }));
   }
 }

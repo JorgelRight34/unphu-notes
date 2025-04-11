@@ -11,5 +11,9 @@
   [(isOpen)]="showModal"
   width="60dvw"
 >
-  <app-note-form [groupId]="groupId()" [week]="week()" />
+  <app-note-form
+    (onSubmit)="handleOnSubmit($event)"
+    [groupId]="groupId()"
+    [week]="week()"
+  />
 </app-modal>

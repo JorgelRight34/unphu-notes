@@ -1,3 +1,6 @@
+import { GroupMember } from './groupMember';
+import { Note } from './note';
+
 export interface Group {
   id: number;
   code: string;
@@ -7,4 +10,6 @@ export interface Group {
   teacherName: string;
   teacherId: number | null;
   teacher: any | null;
+  notes: Note[];
+  members: GroupMember[];
 }
