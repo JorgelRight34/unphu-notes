@@ -1,0 +1,28 @@
+<div class="d-flex align-items-center">
+  <span class="text-muted">{{ getMembersNamesListAsString() }}</span>
+  <span class="material-symbols-outlined hover ms-2" (click)="openModal()">
+    visibility
+  </span>
+</div>
+
+<app-modal title="Miembros" width="50dvw" [isOpen]="showModal()">
+  <div class="p-3">
+    @for (member of members(); track member.id) {
+    <div class="border rounded shadow-sm p-2 mb-3">
+      <div>
+        <img
+          loading="lazy"
+          class="img-fluid profile-pic me-2"
+          [src]="member.student.profilePic"
+          [alt]="member.student.username"
+        /><span class="text-truncate">{{
+          member.student.fullName | titlecase
+        }}</span
+        ><span class="text-muted ms-3">{{
+          member.student.username | uppercase
+        }}</span>
+      </div>
+    </div>
+    }
+  </div>
+</app-modal>

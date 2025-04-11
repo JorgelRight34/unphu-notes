@@ -6,7 +6,7 @@ using api.Errors;
 namespace api.Middlewares;
 
 public class ExceptionMiddleware(
-    RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env
+    RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env, IConfiguration config
 )
 {
     public async Task InvokeAsync(HttpContext context)
@@ -22,8 +22,8 @@ public class ExceptionMiddleware(
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             var response = env.IsDevelopment()
-                ? new ApiException(context.Response.StatusCode, ex.Message, ex.StackTrace)
-                : new ApiException(context.Response.StatusCode, ex.Message, "Internal server error");
+                ? new ApiException(context.Response.StatusCode, config.GetConnectionString("DefaultConnection"), ex.StackTrace)
+                : new ApiException(context.Response.StatusCode, config.GetConnectionString("DefaultConnection"), "Internal server error");
 
             var options = new JsonSerializerOptions
             {

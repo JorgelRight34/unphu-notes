@@ -11,6 +11,8 @@ public class NoteDto
     [Required]
     public int Id { get; set; }
     [Required]
+    public string? Title { get; set; }
+    [Required]
     public int SubjectGroupId { get; set; }
     [Required]
     public string? StudentId { get; set; }

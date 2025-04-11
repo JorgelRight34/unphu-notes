@@ -37,8 +37,14 @@ public class NoteRepository(
         {
             foreach (var file in createNoteDto.Files)
             {
-                var fileUpload = await GenerateNoteFile(file, entry.Entity.Id);
-                context.NoteFiles.Add(fileUpload);
+                try 
+                {
+                    var fileUpload = await GenerateNoteFile(file, entry.Entity.Id);
+                    context.NoteFiles.Add(fileUpload);
+                } catch {
+                    context.Remove(entry.Entity);
+                    await context.SaveChangesAsync();
+                }
             }
         }
 
@@ -76,6 +82,9 @@ public class NoteRepository(
             if (result.Error == null) context.NoteFiles.Remove(file);
         }
 
+        var comments = await context.Comments.Where(x => x.NoteId == id).ToListAsync();
+
+        context.Comments.RemoveRange(comments);
         context.Notes.Remove(note);
         await context.SaveChangesAsync();
 

@@ -7,6 +7,7 @@ import { NoteFilesGalleryComponent } from '../note-files-gallery/note-files-gall
 import { UserPostCardComponent } from '../../common/user-post-card/user-post-card.component';
 import { NoteFile } from '../../../models/noteFile';
 import { SafeUrl } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-note-card',
@@ -25,7 +26,10 @@ export class NoteCardComponent {
   showModal = signal<boolean>(false);
   noteFileUrl = signal<SafeUrl | null>(null);
 
-  constructor(private noteService: NoteService) {}
+  constructor(
+    private noteService: NoteService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.noteFileUrl.set(
@@ -37,7 +41,10 @@ export class NoteCardComponent {
     const id = this.note().id;
     if (id === undefined) return;
     this.noteService.deleteNote(id).subscribe({
-      next: () => this.onDelete.emit(this.note()),
+      next: () => {
+        this.toastr.success('Nota eliminada!');
+        this.onDelete.emit(this.note());
+      },
     });
   }
 

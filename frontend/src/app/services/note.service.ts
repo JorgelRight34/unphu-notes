@@ -15,12 +15,18 @@ export class NoteService {
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
 
-  createNote(subjectGroupId: number, files: File[], week: number) {
+  createNote(
+    subjectGroupId: number,
+    files: File[],
+    week: number,
+    title: string
+  ) {
     const data = new FormData();
     files.map((file) => data.append('files', file));
 
     data.append('subjectGroupId', String(subjectGroupId));
     data.append('week', String(week));
+    data.append('title', title);
 
     return this.http.post<Note>(this.baseUrl, data);
   }

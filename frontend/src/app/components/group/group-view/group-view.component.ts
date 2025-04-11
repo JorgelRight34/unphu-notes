@@ -7,16 +7,19 @@ import { NoteCardComponent } from '../../note/note-card/note-card.component';
 import { map, of } from 'rxjs';
 import { CreateNoteButtonComponent } from '../../note/create-note-button/create-note-button.component';
 import { Group } from '../../../models/group';
+import { MemberListComponent } from '../member-list/member-list.component';
 
 @Component({
   selector: 'app-subject-view',
-  imports: [NoteCardComponent, CreateNoteButtonComponent],
+  imports: [NoteCardComponent, CreateNoteButtonComponent, MemberListComponent],
   templateUrl: './group-view.component.html',
   styleUrl: './group-view.component.css',
 })
 export class SubjectViewComponent {
   week = computed(() => this.groupService.currentWeek());
-  weekNotes = computed<Note[]>(() => this.notes().filter(note => note.week === this.week()));
+  weekNotes = computed<Note[]>(() =>
+    this.notes().filter((note) => note.week === this.week())
+  );
   notes = signal<Note[]>([]);
   members = signal<GroupMember[]>([]);
   group = signal<Group | null>(null);
@@ -27,7 +30,7 @@ export class SubjectViewComponent {
     private groupService: GroupService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.route.params
@@ -52,21 +55,20 @@ export class SubjectViewComponent {
           });
 
           this.groupService.getGroup(groupId).subscribe({
-            next: (data) => this.group.set(data)
+            next: (data) => this.group.set(data),
           });
 
           return params;
         })
       )
       .subscribe({
-        next: () => this.loading.set(false)
+        next: () => this.loading.set(false),
       });
   }
 
   changeWeekBy(n: number) {
     if (this.week() + n < 1) return;
     this.groupService.currentWeek.update((prev) => prev + n);
-
   }
 
   handleAddNote(note: Note) {
@@ -75,9 +77,5 @@ export class SubjectViewComponent {
 
   handleOnDelete(note: Note) {
     this.notes.update((prev) => [...prev.filter((n) => n.id != note.id)]);
-  }
-
-  getMembersNamesListAsString(): string {
-    return this.members().map((member) => member.student.fullName.split(' ')[0]).join(', ');
   }
 }

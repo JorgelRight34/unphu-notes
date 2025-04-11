@@ -1,71 +1,83 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="login.component.css" />
+    <title>UNPHU | Notas</title>
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="login.component.css" />
-  <title>UNPHU | Notas</title>
-</head>
-
-<body>
-  <header class="header-area header-sticky">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <nav class="main-nav">
-            <a href="#home" class="logo">
-              <img src="https://unphu.edu.do/wp-content/uploads/2022/11/logo-unphu-blanco.png" alt="Logo de la Plataforma" />
-            </a>
-            <ul class="nav">
-              <li class="scroll-to-section"><a href="#home">Inicio</a></li>
-              <li class="scroll-to-section"><a href="#cursos">Cursos</a></li>
-              
-            </ul>
-            <a class="menu-trigger">
-              <span>Menu</span>
-            </a>
-          </nav>
+  <body>
+    <header class="header-area header-sticky">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <nav class="main-nav">
+              <a href="#home" class="logo">
+                <img
+                  src="https://unphu.edu.do/wp-content/uploads/2022/11/logo-unphu-blanco.png"
+                  alt="Logo de la Plataforma"
+                />
+              </a>
+              <ul class="nav">
+                <li class="scroll-to-section"><a href="#home">Inicio</a></li>
+                <li class="scroll-to-section"><a href="#cursos">Cursos</a></li>
+              </ul>
+              <a class="menu-trigger">
+                <span>Menu</span>
+              </a>
+            </nav>
+          </div>
         </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <div class="page-heading" id="home">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="header-text">
-            <h2>Bienvenido a UNPHU | Notes</h2>
-            <div class="div-dec"></div>
+    <div class="page-heading" id="home">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="header-text">
+              <h2>Bienvenido a UNPHU | Notes</h2>
+              <div class="div-dec"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <section class="main-services" id="login">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="service-item">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="left-image">
-                  <img src="https://img.freepik.com/free-vector/realistic-thumbtack-pins-collection-with-notes_52683-78551.jpg?t=st=1744244457~exp=1744248057~hmac=9c7943aa5a2796922eb3b6dd7c77a8eecbc0e2a2c6a895f82a389bf0e61a192d&w=996" alt="Imagen Representativa" />
+    <section class="main-services" id="login">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="service-item">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="left-image">
+                    <img
+                      src="https://img.freepik.com/free-vector/realistic-thumbtack-pins-collection-with-notes_52683-78551.jpg?t=st=1744244457~exp=1744248057~hmac=9c7943aa5a2796922eb3b6dd7c77a8eecbc0e2a2c6a895f82a389bf0e61a192d&w=996"
+                      alt="Imagen Representativa"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div class="col-lg-6 align-self-center">
-                <div class="right-text-content">
-                  <i class="fas fa-sign-in-alt"></i>
-                  <h4>Iniciar Sesión</h4>
-                  <p>Accede con tu cuenta para ver tus cursos, apuntes y más.</p>
-                  <div class="buttons">
-                    
+                <div class="col-lg-6 align-self-center">
+                  <div class="right-text-content">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <h4>Iniciar Sesión</h4>
+                    <p>
+                      Accede con tu cuenta para ver tus cursos, apuntes y más.
+                    </p>
+                    <div class="buttons">
+                      <app-login-btn />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -73,45 +85,45 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="simple-cta" id="cursos">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-5">
-          <h4>Explora tus <em>Cursos</em> y accede a tus <strong>Anotaciones</strong></h4>
-        </div>
-        <div class="col-lg-7">
-          <div class="buttons">
-            
+    <section class="simple-cta" id="cursos">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-5">
+            <h4>
+              Explora tus <em>Cursos</em> y accede a tus
+              <strong>Anotaciones</strong>
+            </h4>
+          </div>
+          <div class="col-lg-7">
+            <div class="buttons"></div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer id="contacto">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <p>&copy; 2025 Mi Plataforma de Cursos. Todos los derechos reservados.</p>
+    <footer id="contacto">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <p>
+              &copy; 2025 Mi Plataforma de Cursos. Todos los derechos
+              reservados.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
 
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/js/isotope.min.js"></script>
-  <script src="assets/js/owl-carousel.js"></script>
-  <script src="assets/js/tabs.js"></script>
-  <script src="assets/js/swiper.js"></script>
-  <script src="assets/js/custom.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/isotope.min.js"></script>
+    <script src="assets/js/owl-carousel.js"></script>
+    <script src="assets/js/tabs.js"></script>
+    <script src="assets/js/swiper.js"></script>
+    <script src="assets/js/custom.js"></script>
 
-  <script>
-    
-  </script>
-</body>
-
+    <script></script>
+  </body>
 </html>

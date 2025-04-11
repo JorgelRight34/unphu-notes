@@ -6,10 +6,14 @@
       <h5 class="text-truncate mb-0 me-auto">{{ group()?.name }}</h5>
       <!-- Create note button -->
       <span class="ms-auto">
-        <app-create-note-button [week]="week()" (onSubmit)="handleAddNote($event)" [groupId]="groupId() || 0" />
+        <app-create-note-button
+          [week]="week()"
+          (onSubmit)="handleAddNote($event)"
+          [groupId]="groupId() || 0"
+        />
       </span>
     </div>
-    <span class="text-muted">{{ getMembersNamesListAsString() }}</span>
+    <app-member-list [members]="members()" />
   </div>
 
   <!-- Notes -->
@@ -18,14 +22,15 @@
     <div class="mx-auto mb-3 shadow-sm">
       <app-note-card [note]="note" (onDelete)="handleOnDelete($event)" />
     </div>
-    } @empty {
-    @if (!loading()) {
+    } @empty { @if (!loading()) {
     <h1>No hay notas</h1>
-    }
-    }
+    } }
   </div>
   <!-- Week selector -->
-  <div id="week-selector" class="d-flex align-items-center justify-content-center ms-auto">
+  <div
+    id="week-selector"
+    class="d-flex align-items-center justify-content-center ms-auto"
+  >
     <span class="arrow material-symbols-outlined" (click)="changeWeekBy(-1)">
       arrow_back
     </span>

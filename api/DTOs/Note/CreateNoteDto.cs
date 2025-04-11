@@ -8,6 +8,8 @@ public class CreateNoteDto
     [Required]
     public int SubjectGroupId { get; set; }
     [Required]
+    public string? Title { get; set; }
+    [Required]
     public List<IFormFile>? Files { get; set; }
     [Required]
     public int Week { get; set; }

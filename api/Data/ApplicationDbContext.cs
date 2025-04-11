@@ -26,13 +26,13 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>
             .HasMany(n => n.Comments)
             .WithOne(c => c.Note)
             .HasForeignKey(c => c.NoteId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
 
         builder.Entity<Note>()
             .HasMany(n => n.NoteFiles)
             .WithOne(f => f.Note)
             .HasForeignKey(f => f.NoteId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
 
         var roles = new List<IdentityRole>
         {

@@ -4,6 +4,7 @@ import { User } from './user';
 
 export interface Note {
   id?: number;
+  title: string;
   subjectGroupId: number;
   studentId: string;
   noteFiles: NoteFile[];

@@ -15,7 +15,10 @@ public static class ApplicationServiceExtensions
     {
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseSqlite(config.GetConnectionString("DefaultConnection"));
+            options.UseSqlServer(
+                config?.GetConnectionString("DefaultConnection"),
+                sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()
+            );
         });
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IAuthRepository, AuthRepository>();

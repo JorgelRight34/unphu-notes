@@ -1,0 +1,11 @@
+.files {
+  min-height: 20dvh;
+  max-height: 75dvh;
+  overflow-y: auto;
+}
+
+@media (max-width: 500px) {
+  .add-file {
+    width: 100%;
+  }
+}
