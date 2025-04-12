@@ -6,6 +6,7 @@ import { tap } from 'rxjs';
 import { NoteComment } from '../models/noteComment';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NoteFile } from '../models/noteFile';
+import { GroupService } from './group.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ import { NoteFile } from '../models/noteFile';
 export class NoteService {
   baseUrl = environment.apiUrl + 'notes/';
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer, private groupService: GroupService) { }
 
   createNote(
     subjectGroupId: number,
@@ -28,7 +29,12 @@ export class NoteService {
     data.append('week', String(week));
     data.append('title', title);
 
-    return this.http.post<Note>(this.baseUrl, data);
+    return this.http.post<Note>(this.baseUrl, data).pipe(
+      tap((note) => {
+        this.groupService.addGroupNotes(subjectGroupId, [note]);
+        return note;
+      })
+    );
   }
 
   getNoteFileDownloadUrl(noteFile: NoteFile) {

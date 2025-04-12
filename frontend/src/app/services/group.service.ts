@@ -4,7 +4,8 @@ import { environment } from '../../environments/environment';
 import { Group } from '../models/group';
 import { Note } from '../models/note';
 import { GroupMember } from '../models/groupMember';
-import { finalize, map, single, tap } from 'rxjs';
+import { finalize, map, of, single, tap } from 'rxjs';
+import { NoteComment } from '../models/noteComment';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class GroupService {
   private cacheGroups: Record<number, Group> = {};
   private fetched = signal<boolean>(false);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getEnrolledGroups() {
     // Get current user enrolled subjects if not fetched
@@ -36,6 +37,10 @@ export class GroupService {
   }
 
   getGroup(id: number) {
+    const cache = this.cacheGroups[id];
+    // Check if the group is already in the cache
+    if (cache) return of(cache);
+
     // Get the group with the corresponding id
     return this.http.get<Group>(this.baseUrl + `${id}`).pipe(
       map((data) => {
@@ -54,6 +59,13 @@ export class GroupService {
   getGroupNotes(id: number) {
     // Get the notes related to the group with the correspondig id
     return this.http.get<Note[]>(this.baseUrl + `${id}/notes`);
+  }
+
+  addGroupNotes(id: number, notes: Note[]) {
+    const found = this.groups().find((g) => g.id === id);
+    if (!found) return;
+
+    this.cacheGroups[id] = { ...found, notes: [...found.notes, ...notes] };
   }
 
   getGroupMembers(id: number) {

@@ -9,7 +9,7 @@ import { NoteComment } from '../models/noteComment';
 export class CommentService {
   baseUrl = environment.apiUrl + 'comments/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   createNoteComment(newComment: { content: string; noteId: number }) {
     return this.http.post<NoteComment>(this.baseUrl, newComment);
