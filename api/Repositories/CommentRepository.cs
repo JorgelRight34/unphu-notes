@@ -50,7 +50,7 @@ public class CommentRepository(
 
     public async Task<Comment?> GetByIdAsync(int id, string username)
     {
-        var comment = await context.Comments.FirstOrDefaultAsync(x => x.Id == id);
+        var comment = await context.Comments.Include(x => x.Author).FirstOrDefaultAsync(x => x.Id == id);
         if (comment == null) return null;
 
         var member = await subjectGroupRepository.GetGroupMember(username, comment.SubjectGroupId);
