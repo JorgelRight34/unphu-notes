@@ -1,5 +1,5 @@
 @if (images().length > 0) {
-<gallery (indexChange)="handleIndexChange($event)" gallerize="true" [items]="images()" class="gallery {{ class() }}"
-  [style]="{ 'min-width': minWidth() }" [id]="`gallery-${note().id}`">
+<gallery (indexChange)="handleIndexChange($event)" [gallerize]="`gallery-${note().id}`" [items]="images()"
+  class="gallery {{ class() }}" [style]="{ 'min-width': minWidth() }" [id]="`gallery-${note().id}`">
 </gallery>
 }
