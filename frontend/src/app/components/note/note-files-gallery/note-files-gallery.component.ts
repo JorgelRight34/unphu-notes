@@ -7,11 +7,12 @@ import {
   ImageItem,
   VideoItem,
 } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
 import { NoteFile } from '../../../models/noteFile';
 
 @Component({
   selector: 'app-note-files-gallery',
-  imports: [GalleryModule],
+  imports: [GalleryModule, LightboxModule],
   templateUrl: './note-files-gallery.component.html',
   styleUrl: './note-files-gallery.component.css',
 })
