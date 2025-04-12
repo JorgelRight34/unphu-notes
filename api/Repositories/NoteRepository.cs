@@ -37,11 +37,13 @@ public class NoteRepository(
         {
             foreach (var file in createNoteDto.Files)
             {
-                try 
+                try
                 {
                     var fileUpload = await GenerateNoteFile(file, entry.Entity.Id);
                     context.NoteFiles.Add(fileUpload);
-                } catch {
+                }
+                catch
+                {
                     context.Remove(entry.Entity);
                     await context.SaveChangesAsync();
                 }
@@ -105,7 +107,10 @@ public class NoteRepository(
     public async Task<List<Comment>> GetCommentsAsync(int noteId, string username)
     {
         var note = await GetByIdAsync(noteId, username);
-        var comments = await context.Comments.Where(x => x.NoteId == noteId).ToListAsync();
+        var comments = await context.Comments
+            .Where(x => x.NoteId == noteId)
+            .Include(x => x.Author)
+            .ToListAsync();
         return comments;
     }
 
