@@ -107,8 +107,9 @@ public class SubjectGroupRepository(
 
         var subjectGroup = await context.SubjectGroups
             .Include(x => x.Members)
+                .ThenInclude(x => x.Student)
             .Include(x => x.Notes)
-            .ThenInclude(x => x.NoteFiles)
+                .ThenInclude(x => x.NoteFiles)
             .FirstOrDefaultAsync(x => x.Id == id);
         return subjectGroup;
     }
@@ -169,7 +170,7 @@ public class SubjectGroupRepository(
         return subjectGroups.ToList();  // Return list
     }
 
-       public async Task<IEnumerable<Note>> GetGroupNotesAsync(int groupId, string username)
+    public async Task<IEnumerable<Note>> GetGroupNotesAsync(int groupId, string username)
     {
         var subjectGroup = await context.SubjectGroups.FindAsync(groupId);
         if (subjectGroup == null) throw new Exception("Subject group doesnt' exist");
@@ -177,7 +178,11 @@ public class SubjectGroupRepository(
         var member = await GetGroupMember(username, subjectGroup.Id);
         if (member == null) throw new Exception("You are not a member");
 
-        var notes = await context.Notes.Include(x => x.NoteFiles).Where(x => x.SubjectGroupId == groupId).ToListAsync();
+        var notes = await context.Notes
+            .Include(x => x.Student)
+            .Include(x => x.NoteFiles)
+            .Where(x => x.SubjectGroupId == groupId)
+            .ToListAsync();
 
         return notes;
     }

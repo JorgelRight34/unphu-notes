@@ -1,25 +1,15 @@
 <form #createForm="ngForm" (ngSubmit)="handleCreateNote(createForm)">
   <!-- Title -->
   <div class="p-3">
-    <label for="title" class="form-label">Titulo</label>
-    <input
-      type="text"
-      class="form-control"
-      id="title"
-      name="title"
-      [(ngModel)]="model.title"
-    />
+    <label for="title" class="form-label">Título</label>
+    <input type="text" class="form-control" id="title" name="title" required="true" [(ngModel)]="model.title" />
   </div>
   <!-- Files -->
   <div class="p-3 border-bottom">
     <div class="d-lg-flex align-items-center mb-3">
       <h6 class="mb-2 mb-lg-0">Archivos ({{ files().length }})</h6>
-      <button
-        class="btn btn-dark-blue px-5 ms-auto add-file"
-        type="button"
-        appFileUpload
-        (fileSelected)="handleAddNoteFile($event)"
-      >
+      <button class="btn btn-dark-blue px-5 ms-auto add-file" type="button" appFileUpload
+        (fileSelected)="handleAddNoteFile($event)">
         + Añadir
       </button>
     </div>
@@ -30,11 +20,7 @@
     </div>
   </div>
   <div class="p-3 d-flex justify-content-end">
-    <button
-      type="submit"
-      [disabled]="files().length === 0"
-      class="btn btn-dark-green px-lg-5"
-    >
+    <button type="submit" [disabled]="files().length === 0" class="btn btn-dark-green px-lg-5">
       Crear
     </button>
   </div>
