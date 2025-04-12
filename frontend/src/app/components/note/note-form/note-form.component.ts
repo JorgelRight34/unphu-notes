@@ -22,7 +22,7 @@ export class NoteFormComponent {
   constructor(
     private noteService: NoteService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   handleAddNoteFile(file: File) {
     if (this.groupId() === 0) return;
@@ -31,9 +31,13 @@ export class NoteFormComponent {
   }
 
   handleCreateNote(form: NgForm) {
+    if (this.files().length === 0) {
+      this.toastr.error('Debes agregar al menos un archivo');
+      return;
+    }
+
     if (
       this.groupId() === 0 ||
-      this.files().length === 0 ||
       form.invalid ||
       this.week() === 0
     )

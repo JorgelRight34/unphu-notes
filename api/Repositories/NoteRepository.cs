@@ -78,6 +78,8 @@ public class NoteRepository(
         var member = await subjectGroupRepository.GetGroupMember(username, note.SubjectGroupId);
         if (member == null) throw new Exception("You are not a member");
 
+        if (member.StudentId != note.StudentId) throw new Exception("You are not the author");
+
         foreach (var file in note.NoteFiles)
         {
             var result = await fileUploadService.DeleteFileAsync(file.PublicId);

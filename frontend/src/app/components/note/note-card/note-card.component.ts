@@ -1,4 +1,4 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { Note } from '../../../models/note';
 import { NoteService } from '../../../services/note.service';
 import { ModalComponent } from '../../common/modal/modal.component';
@@ -8,6 +8,7 @@ import { UserPostCardComponent } from '../../common/user-post-card/user-post-car
 import { NoteFile } from '../../../models/noteFile';
 import { SafeUrl } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-note-card',
@@ -23,13 +24,15 @@ import { ToastrService } from 'ngx-toastr';
 export class NoteCardComponent {
   note = input.required<Note>();
   onDelete = output<Note>();
+  user = computed(() => this.authService.user());
   showModal = signal<boolean>(false);
   noteFileUrl = signal<SafeUrl | null>(null);
 
   constructor(
     private noteService: NoteService,
+    private authService: AuthService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.noteFileUrl.set(

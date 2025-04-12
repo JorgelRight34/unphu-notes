@@ -6,33 +6,23 @@
     <h6 class="mb-0 mt-2">{{ note().title }}</h6>
   </div>
   <!-- Image gallery -->
-  <app-note-files-gallery
-    [note]="note()"
-    (onIndexChange)="handleCurrentImageChange($event)"
-  />
+  <app-note-files-gallery [note]="note()" (onIndexChange)="handleCurrentImageChange($event)" />
   <!-- Option buttons-->
   <div class="card-body d-flex justify-content-end flex-wrap gap-3 p-2">
     <!-- Delete -->
-    <button
-      class="btn btn-dark-green d-flex align-items-center"
-      (click)="handleDelete()"
-    >
+    @if (note().student.username === user()?.username) {
+    <button class="btn btn-dark-green d-flex align-items-center" (click)="handleDelete()">
       <span class="material-symbols-outlined me-0 me-lg-1">delete</span>
       <span class="d-none d-lg-block">Borrar</span>
     </button>
+    }
     <!-- Download -->
-    <a
-      [href]="noteFileUrl()"
-      class="btn btn-dark-green d-flex align-items-center"
-    >
+    <a [href]="noteFileUrl()" class="btn btn-dark-green d-flex align-items-center">
       <span class="material-symbols-outlined me-0 me-lg-1">download</span>
       <span class="d-none d-lg-block">Descargar</span>
     </a>
     <!-- Comments -->
-    <button
-      class="btn btn-dark-green d-flex align-items-center"
-      (click)="handleShowModal()"
-    >
+    <button class="btn btn-dark-green d-flex align-items-center" (click)="handleShowModal()">
       <span class="material-symbols-outlined me-0 me-lg-1">comment</span>
       <span class="d-none d-lg-block">Comentarios</span>
     </button>
